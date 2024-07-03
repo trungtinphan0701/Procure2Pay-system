@@ -1,7 +1,7 @@
 package hosi.procure2pay.service.impl;
 
 import hosi.procure2pay.entity.UserEntity;
-import hosi.procure2pay.service.repo.UserRepoService;
+import hosi.procure2pay.service.UserRepoService;
 import hosi.procure2pay.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

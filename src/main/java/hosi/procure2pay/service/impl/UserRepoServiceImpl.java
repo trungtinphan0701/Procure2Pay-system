@@ -23,7 +23,7 @@ public class UserRepoServiceImpl implements UserRepoService {
     @Override
     public UserEntity findById(Integer userId) {
         if (userId == null) {
-            throw new ResponseException(BadRequestError.USER_ID_INVALID);
+            throw new ResponseException(BadRequestError.USER_ID_NULL);
         }
 
         Optional<UserEntity> userEntity = userRepository.findById(userId);
