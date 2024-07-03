@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Data
 @RequiredArgsConstructor
 @Entity
+@Table(name = "requisitions")
 public class RequisitionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +20,8 @@ public class RequisitionEntity {
 //    @Column(name="supplier")
 //    private Supplier supplier;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name="created_by")
     private UserEntity createdBy;
 
     @Column(name="created_on")
