@@ -8,19 +8,21 @@ import lombok.RequiredArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
-@RequiredArgsConstructor
 @Entity
+@Table(name = "requisitions")
+@RequiredArgsConstructor
 public class RequisitionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-//    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @Column(name="supplier")
-//    private Supplier supplier;
+    @ManyToOne
+    @JoinColumn(name="created_by")
+    private UserEntity createdByUser;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private UserEntity createdBy;
+    @ManyToOne
+    @JoinColumn(name="supplier_id")
+    private SupplierEntity supplierEntity;
 
     @Column(name="created_on")
     private LocalDateTime createdOn;
@@ -32,3 +34,5 @@ public class RequisitionEntity {
     @Column(name="total_cost")
     private Float totalCost;
 }
+
+// many requisitions can be owned by 1 user - many to one with userentity

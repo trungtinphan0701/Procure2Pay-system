@@ -14,6 +14,8 @@ public enum BadRequestError implements ResponseError {
     USER_EMAIL_ALREADY_EXISTS(102, "User email already exists"),
     USER_EMAIL_NOT_FOUND(103, "User email not found"),
     USER_NOT_FOUND(105, "User not found"),
+    SUPPLIER_ID_NULL(107, "Supplier id is null"),
+    SUPPLIER_NOT_FOUND(108, "Supplier not found"),
     ;
 
     private final int errorCode;

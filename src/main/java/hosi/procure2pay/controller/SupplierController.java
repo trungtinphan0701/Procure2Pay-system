@@ -1,7 +1,7 @@
 package hosi.procure2pay.controller;
 
-import hosi.procure2pay.entity.UserEntity;
-import hosi.procure2pay.service.UserService;
+import hosi.procure2pay.entity.SupplierEntity;
+import hosi.procure2pay.service.SupplierService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/supplier")
 @RequiredArgsConstructor
-public class UserController {
-    private final UserService userService;
+public class SupplierController {
+    private final SupplierService supplierService;
 
     @PostMapping("/add")
-    public ResponseEntity<UserEntity> addUser(@RequestBody UserEntity user) {
-        return ResponseEntity.ok(userService.addUser(user));
+    public ResponseEntity<SupplierEntity> addSupplier(@RequestBody SupplierEntity supplierEntity) {
+        return ResponseEntity.ok(supplierService.addSupplier(supplierEntity));
     }
 }
