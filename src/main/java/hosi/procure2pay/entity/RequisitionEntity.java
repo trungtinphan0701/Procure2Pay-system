@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @RequiredArgsConstructor
@@ -33,4 +34,7 @@ public class RequisitionEntity {
 
     @Column(name="total_cost")
     private Float totalCost;
+
+    @OneToMany(mappedBy = "requisition")
+    private List<RequisitionItemEntity> items;
 }
