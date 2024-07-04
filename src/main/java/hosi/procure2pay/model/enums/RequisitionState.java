@@ -12,9 +12,11 @@ public enum RequisitionState {
     private String stateName;
 
     private static Map<Integer, RequisitionState> requisitionStateMap;
+
     static {
         initRequisitionStateMap();
     }
+
     RequisitionState(Integer stateId, String stateName) {
         this.stateId = stateId;
         this.stateName = stateName;
