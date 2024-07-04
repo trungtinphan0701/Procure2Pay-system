@@ -16,6 +16,12 @@ public enum BadRequestError implements ResponseError {
     SUPPLIER_ITEM_NAME_INVALID (107, "Item name is invalid"),
     PRICE_INVALID (108, "Price is invalid"),
     SUPPLIER_NOT_FOUND (109, "Supplier not found"),
+    REQUISITION_ID_INVALID (110, "Requisition id is invalid"),
+    SUPPLIER_ITEM_ID_INVALID (111, "Supplier item id is invalid"),
+    QUANTITY_INVALID (112, "Quantity is invalid"),
+    REQUISITION_NOT_FOUND (113, "Requisition not found"),
+    SUPPLIER_ITEM_NOT_FOUND (114, "Supplier item not found"),
+
     ;
 
 
