@@ -16,9 +16,9 @@ public class RequisitionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-//    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @Column(name="supplier")
-//    private Supplier supplier;
+    @ManyToOne
+    @JoinColumn(name="supplier_id")
+    private SupplierEntity supplier;
 
     @ManyToOne
     @JoinColumn(name="created_by")

@@ -2,26 +2,15 @@ package hosi.procure2pay.mapper;
 
 import hosi.procure2pay.entity.RequisitionEntity;
 import hosi.procure2pay.entity.UserEntity;
-import hosi.procure2pay.model.request.CreateRequisitionRequest;
-import hosi.procure2pay.model.response.CreateRequisitionResponse;
+import hosi.procure2pay.model.response.RequisitionResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
 public class RequisitionMapper {
-
-    public RequisitionEntity fromUserToRequisition(UserEntity userEntity) {
-        RequisitionEntity requisitionEntity = new RequisitionEntity();
-        requisitionEntity.setCreatedBy(userEntity);
-
-        return requisitionEntity;
-    }
-
-    public CreateRequisitionResponse toResponse(RequisitionEntity requisitionEntity) {
-        CreateRequisitionResponse response = new CreateRequisitionResponse();
+    public RequisitionResponse toResponse(RequisitionEntity requisitionEntity) {
+        RequisitionResponse response = new RequisitionResponse();
         response.setRequisitionId(requisitionEntity.getId());
         response.setCreatedByUserId(requisitionEntity.getCreatedBy().getId());
         response.setCreatedOn(requisitionEntity.getCreatedOn());

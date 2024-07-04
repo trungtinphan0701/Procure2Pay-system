@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-public class CreateRequisitionResponse {
+public class RequisitionResponse {
     private Integer requisitionId;
     private Integer createdByUserId;
     private LocalDateTime createdOn;
