@@ -28,12 +28,10 @@ public class RequisitionMapper {
     }
 
     public GetRequisitionInfoResponse toRequisitionInfoResponse (RequisitionEntity requisitionEntity) {
-        GetRequisitionInfoResponse getRequisitionInfoResponse = new GetRequisitionInfoResponse();
-
         UserInfoResponse userInfoResponse = userMapper.toUserInfoResponse(requisitionEntity.getCreatedByUser());
 
+        GetRequisitionInfoResponse getRequisitionInfoResponse = new GetRequisitionInfoResponse();
         getRequisitionInfoResponse.setCreatedBy(userInfoResponse);
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         getRequisitionInfoResponse.setCreatedOn(requisitionEntity.getCreatedOn().format(formatter));
         getRequisitionInfoResponse.setState(requisitionEntity.getState().getStateName());

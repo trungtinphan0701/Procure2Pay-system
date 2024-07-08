@@ -7,7 +7,9 @@ import hosi.procure2pay.exception.BadRequestError;
 import hosi.procure2pay.exception.ResponseException;
 import hosi.procure2pay.mapper.RequisitionItemMapper;
 import hosi.procure2pay.model.request.CreateRequisitionItemRequest;
+import hosi.procure2pay.model.request.UpdateRequisitionItemRequest;
 import hosi.procure2pay.model.response.CreateRequisitionItemResponse;
+import hosi.procure2pay.model.response.UpdateRequisitionItemResponse;
 import hosi.procure2pay.service.RequisitionItemService;
 import hosi.procure2pay.service.repo.RequisitionItemRepoService;
 import hosi.procure2pay.service.repo.RequisitionRepoService;
@@ -49,5 +51,24 @@ public class RequisitionItemServiceImpl implements RequisitionItemService {
 
         CreateRequisitionItemResponse response = requisitionItemMapper.toRequisitionItemResponse(requisitionItem);
         return response;
+    }
+
+    @Override
+    public UpdateRequisitionItemResponse updateRequisitionItem(UpdateRequisitionItemRequest request) {
+        RequisitionItemEntity requisitionItem = requisitionItemRepoService.findByRequisitionIdAndSupplierItemId(request.getRequisitionId(), request.getSupplierItemId());
+
+        SupplierItemEntity supplierItem = supplierItemRepoService.findById(request.getSupplierItemId());
+        requisitionItem.setQuantity(request.getQuantity());
+        requisitionItem.setTotalCost(request.getQuantity()*supplierItem.getUnitCost());
+        requisitionItemRepoService.save(requisitionItem);
+        UpdateRequisitionItemResponse updateRequisitionItemResponse = requisitionItemMapper.toUpdateRequisitionItemResponse(requisitionItem);
+        return updateRequisitionItemResponse;
+    }
+
+    @Override
+    public CreateRequisitionItemResponse deleteRequisitionItem(Integer id) {
+        RequisitionItemEntity requisitionItem = requisitionItemRepoService.findById(id);
+        requisitionItemRepoService.delete(id);
+        return requisitionItemMapper.toRequisitionItemResponse(requisitionItem);
     }
 }

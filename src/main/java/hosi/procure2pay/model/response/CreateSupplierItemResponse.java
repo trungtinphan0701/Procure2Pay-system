@@ -1,8 +1,5 @@
 package hosi.procure2pay.model.response;
 
-import hosi.procure2pay.model.enums.SupplierItemState;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 @Data
