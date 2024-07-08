@@ -2,12 +2,20 @@ package hosi.procure2pay.mapper;
 
 import hosi.procure2pay.entity.RequisitionEntity;
 import hosi.procure2pay.model.response.CreateRequisitionResponse;
-import lombok.AllArgsConstructor;
+import hosi.procure2pay.model.response.GetRequisitionInfoResponse;
+import hosi.procure2pay.model.response.UserInfoResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.format.DateTimeFormatter;
+
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
+// function to change type to ideal result
 public class RequisitionMapper {
+    private final UserMapper userMapper;
+    private final RequisitionItemMapper requisitionItemMapper;
+
     public CreateRequisitionResponse toRequisitionResponse (RequisitionEntity requisitionEntity) {
         CreateRequisitionResponse createRequisitionResponse = new CreateRequisitionResponse();
         createRequisitionResponse.setRequisitionId(requisitionEntity.getId());
@@ -17,5 +25,17 @@ public class RequisitionMapper {
         createRequisitionResponse.setUserLastName(requisitionEntity.getCreatedByUser().getLastName());
         createRequisitionResponse.setSupplierName(requisitionEntity.getSupplierEntity().getName());
         return createRequisitionResponse;
+    }
+
+    public GetRequisitionInfoResponse toRequisitionInfoResponse (RequisitionEntity requisitionEntity) {
+        UserInfoResponse userInfoResponse = userMapper.toUserInfoResponse(requisitionEntity.getCreatedByUser());
+
+        GetRequisitionInfoResponse getRequisitionInfoResponse = new GetRequisitionInfoResponse();
+        getRequisitionInfoResponse.setCreatedBy(userInfoResponse);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        getRequisitionInfoResponse.setCreatedOn(requisitionEntity.getCreatedOn().format(formatter));
+        getRequisitionInfoResponse.setState(requisitionEntity.getState().getStateName());
+        getRequisitionInfoResponse.setItems(requisitionItemMapper.toRequisitionItemResponses(requisitionEntity.getRequisitionItemEntityList()));
+        return getRequisitionInfoResponse;
     }
 }

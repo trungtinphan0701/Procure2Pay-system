@@ -5,8 +5,11 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-// User input
-public class CreateRequisitionRequest {
-    private Integer userId;
+public class CreateSupplierItemRequest {
     private Integer supplierId;
+    private String itemName;
+    private String itemDescription;
+    private Float unitCost;
+    private String type;
+
 }

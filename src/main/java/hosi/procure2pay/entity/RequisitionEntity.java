@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -33,6 +34,9 @@ public class RequisitionEntity {
 
     @Column(name="total_cost")
     private Float totalCost;
+
+    @OneToMany(mappedBy = "requisition")
+    private List<RequisitionItemEntity> requisitionItemEntityList;
 }
 
 // many requisitions can be owned by 1 user - many to one with userentity

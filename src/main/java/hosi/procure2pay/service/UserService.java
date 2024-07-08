@@ -1,7 +1,8 @@
 package hosi.procure2pay.service;
 
-import hosi.procure2pay.entity.UserEntity;
+import hosi.procure2pay.model.request.CreateUserRequest;
+import hosi.procure2pay.model.response.CreateUserResponse;
 
 public interface UserService {
-    UserEntity addUser(UserEntity user);
+    CreateUserResponse addUser(CreateUserRequest request);
 }

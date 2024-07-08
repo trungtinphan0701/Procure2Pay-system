@@ -1,3 +1,4 @@
+// Controller to check if user is running properly or not
 package hosi.procure2pay.controller;
 
 import org.springframework.http.ResponseEntity;

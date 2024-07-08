@@ -4,4 +4,5 @@ import hosi.procure2pay.entity.RequisitionEntity;
 
 public interface RequisitionRepoService {
     RequisitionEntity save(RequisitionEntity requisition);
+    RequisitionEntity findById(Integer id);
 }

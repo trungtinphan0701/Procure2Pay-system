@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 
 @Data
 @RequiredArgsConstructor
-// User input
-public class CreateRequisitionRequest {
-    private Integer userId;
-    private Integer supplierId;
+public class CreateSupplierRequest {
+    private String name;
+    private String address;
+    private String phoneNumber;
 }

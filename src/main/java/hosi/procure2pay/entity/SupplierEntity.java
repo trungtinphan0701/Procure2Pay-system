@@ -14,9 +14,14 @@ public class SupplierEntity {
     private Integer id;
 
     private String name;
+
     private String address;
+
     private String phoneNumber;
 
     @OneToMany(mappedBy="supplierEntity")
     private List<RequisitionEntity> requisitions;
+
+    @OneToMany(mappedBy = "supplier")
+    private List<SupplierItemEntity> supplierItems;
 }

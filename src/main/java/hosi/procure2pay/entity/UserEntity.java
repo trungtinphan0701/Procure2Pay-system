@@ -23,11 +23,13 @@ public class UserEntity {
     private String lastName;
 
     private String password;
+
     private String email;
 
-    @Enumerated(EnumType.STRING)
-    private UserRole role;
+//    @Enumerated(EnumType.STRING)
+//    private UserRole role;
 
+    private String role;
     @OneToMany(mappedBy="createdByUser")
     private List<RequisitionEntity> requisitions;
 }
