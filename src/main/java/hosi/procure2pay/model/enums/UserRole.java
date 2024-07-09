@@ -1,6 +1,9 @@
 package hosi.procure2pay.model.enums;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public enum UserRole {
@@ -34,5 +37,9 @@ public enum UserRole {
 
     public String getRoleName() {
         return roleName;
+    }
+
+    public List<SimpleGrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + this.name()));
     }
 }
