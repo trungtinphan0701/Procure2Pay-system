@@ -2,6 +2,7 @@ package hosi.procure2pay.service.impl;
 
 import hosi.procure2pay.entity.UserEntity;
 import hosi.procure2pay.mapper.UserMapper;
+import hosi.procure2pay.model.enums.UserRole;
 import hosi.procure2pay.model.request.CreateUserRequest;
 import hosi.procure2pay.model.response.CreateUserResponse;
 import hosi.procure2pay.service.repo.UserRepoService;
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setLastName(request.getLastName());
         userEntity.setEmail(request.getEmail());
         userEntity.setPassword(request.getPassword());
-        userEntity.setRole(request.getRole());
+        userEntity.setRole(UserRole.valueOf(request.getRole()));
         userRepoService.save(userEntity);
 
         CreateUserResponse response = userMapper.toCreateUserResponse(userEntity);

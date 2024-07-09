@@ -14,7 +14,7 @@ public class UserMapper {
         userInfoResponse.setFirstName(user.getFirstName());
         userInfoResponse.setLastName(user.getLastName());
         userInfoResponse.setEmail(user.getEmail());
-        userInfoResponse.setRole(user.getRole());
+        userInfoResponse.setRole(user.getRole().getRoleName());
 //        userInfoResponse.setRole(user.getRole().getRoleName());
         return userInfoResponse;
     }
@@ -25,7 +25,7 @@ public class UserMapper {
         createUserResponse.setFirstName(user.getFirstName());
         createUserResponse.setLastName(user.getLastName());
         createUserResponse.setEmail(user.getEmail());
-        createUserResponse.setRole(user.getRole());
+        createUserResponse.setRole(user.getRole().getRoleName());
         createUserResponse.setPassword(user.getPassword());
         return createUserResponse;
     }
