@@ -6,8 +6,6 @@ import hosi.procure2pay.entity.SupplierItemEntity;
 import hosi.procure2pay.exception.BadRequestError;
 import hosi.procure2pay.exception.ResponseException;
 import hosi.procure2pay.repository.RequisitionItemRepository;
-import hosi.procure2pay.repository.RequisitionRepository;
-import hosi.procure2pay.repository.SupplierItemRepository;
 import hosi.procure2pay.service.repo.RequisitionItemRepoService;
 import hosi.procure2pay.service.repo.RequisitionRepoService;
 import hosi.procure2pay.service.repo.SupplierItemRepoService;
@@ -23,11 +21,16 @@ public class RequisitionItemRepoServiceImpl implements RequisitionItemRepoServic
     private final RequisitionRepoService requisitionRepoService;
     private final SupplierItemRepoService supplierItemRepoService;
 
+    // save requisition item entity
     @Override
     public RequisitionItemEntity save(RequisitionItemEntity requisitionItemEntity) {
         return requisitionItemRepository.save(requisitionItemEntity);
     }
 
+    // find requisition item entity based on requisition id and supplier item id
+    // if either null -> throw exception
+    // if existed (requisition id and supplier item id must be the same in database) -> return
+    // if not -> throw exception
     @Override
     public RequisitionItemEntity findByRequisitionIdAndSupplierItemId(Integer requisitionId, Integer supplierItemId) {
         if (requisitionId == null) {
@@ -47,6 +50,7 @@ public class RequisitionItemRepoServiceImpl implements RequisitionItemRepoServic
         }
     }
 
+    // find requisition item based on its id
     @Override
     public RequisitionItemEntity findById(Integer id) {
         if (id == null) {
@@ -58,6 +62,7 @@ public class RequisitionItemRepoServiceImpl implements RequisitionItemRepoServic
         } else throw new ResponseException(BadRequestError.ITEM_NOT_FOUND_IN_THIS_REQUISITION_SUPPLIER);
     }
 
+    // delete requisition item based on its id
     @Override
     public void delete(Integer id) {
         if (id == null) {

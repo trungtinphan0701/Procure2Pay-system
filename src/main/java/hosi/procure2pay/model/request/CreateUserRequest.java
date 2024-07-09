@@ -1,5 +1,6 @@
 package hosi.procure2pay.model.request;
 
+import hosi.procure2pay.model.enums.UserRole;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -12,5 +13,5 @@ public class CreateUserRequest {
     private String password;
 
     // how to input enum type?
-    private String role;
+    private UserRole role;
 }

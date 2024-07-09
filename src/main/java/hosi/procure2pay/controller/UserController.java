@@ -1,16 +1,10 @@
 package hosi.procure2pay.controller;
 
-import hosi.procure2pay.model.request.CreateSupplierItemRequest;
-import hosi.procure2pay.model.request.CreateUserRequest;
-import hosi.procure2pay.model.response.CreateSupplierItemResponse;
-import hosi.procure2pay.model.response.CreateUserResponse;
-import hosi.procure2pay.model.response.Response;
+import hosi.procure2pay.model.request.*;
+import hosi.procure2pay.model.response.*;
 import hosi.procure2pay.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,4 +30,25 @@ public class UserController {
 
         return new Response<>(responses);
     }
+
+    @GetMapping("/email")
+    public Response<GetUserByEmailResponse> getUserByEmail(@RequestBody GetUserByEmailRequest request) {
+        return new Response<>(userService.getUserByEmail(request));
+    }
+
+//    @GetMapping("/first-name")
+//    public Response<List<GetUserByFirstNameResponse>> getUserByFirstName(@RequestBody List<GetUserByFirstNameRequest> request) {
+//        List<GetUserByFirstNameResponse> responses = new ArrayList<>();
+//
+//        for (GetUserByFirstNameRequest user : request) {
+//            responses.add(userService.getUserByFirstName(user));
+//        }
+//
+//        return new Response<>(responses);
+//    }
+//
+//    @GetMapping("/last-name")
+//    public Response<GetUserByLastNameResponse> getUserByLastName(@RequestBody GetUserByLastNameRequest request) {
+//        return new Response<>(userService.getUserByLastName(request));
+//    }
 }

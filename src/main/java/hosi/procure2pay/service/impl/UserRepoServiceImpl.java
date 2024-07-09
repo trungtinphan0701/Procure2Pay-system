@@ -32,4 +32,45 @@ public class UserRepoServiceImpl implements UserRepoService {
         }
 
     }
+
+    @Override
+    public UserEntity findByEmail(String email) {
+        if (email == null) {
+            throw new ResponseException(BadRequestError.USER_EMAIL_NULL);
+        } else {
+            Optional<UserEntity> user = userRepository.findByEmail(email);
+            if (user.isPresent()) {
+                return user.get();
+            } else throw new ResponseException(BadRequestError.USER_NOT_FOUND);
+        }
+    }
+
+//    @Override
+//    public UserEntity findByFirstName(String firstName) {
+//        if (firstName == null) {
+//            throw new ResponseException(BadRequestError.FIRST_NAME_INVALID);
+//        } else {
+//            Optional<UserEntity> user = userRepository.findByFirstName(firstName);
+//            if (user.isPresent()) {
+//                return user.get();
+//            } else throw new ResponseException(BadRequestError.USER_NOT_FOUND);
+//        }
+//    }
+//
+//    @Override
+//    public UserEntity findByLastName(String lastName) {
+//        if (lastName == null) {
+//            throw new ResponseException(BadRequestError.LAST_NAME_INVALID);
+//        } else {
+//            Optional<UserEntity> user = userRepository.findByLastName(lastName);
+//            if (user.isPresent()) {
+//                return user.get();
+//            } else throw new ResponseException(BadRequestError.USER_NOT_FOUND);
+//        }
+//    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }

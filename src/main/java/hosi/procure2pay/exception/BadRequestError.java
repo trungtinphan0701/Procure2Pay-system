@@ -22,6 +22,7 @@ public enum BadRequestError implements ResponseError {
     SUPPLIER_ITEM_NOT_FOUND(113, "Supplier item not found"),
     ITEM_NOT_FOUND_IN_THIS_REQUISITION_SUPPLIER(114, "Item not found in this requisition supplier"),
     REQUISITION_ITEM_ID_IS_NULL(115, "Requisition item id is null"),
+
     ;
 
     private final int errorCode;

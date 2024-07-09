@@ -27,6 +27,8 @@ public class RequisitionItemServiceImpl implements RequisitionItemService {
     private final RequisitionItemRepoService requisitionItemRepoService;
     private final RequisitionItemMapper requisitionItemMapper;
 
+    // create requisition item based on input (requisition id and supplier item id)
+    // if supplier item comes from supplier that has different id with one in requisition -> throw exception
     @Override
     public CreateRequisitionItemResponse addRequisitionItem(CreateRequisitionItemRequest request) {
         if (request.getRequisitionId() == null) {
@@ -53,6 +55,7 @@ public class RequisitionItemServiceImpl implements RequisitionItemService {
         return response;
     }
 
+    // update requisition item based on requisition id and supplier item id
     @Override
     public UpdateRequisitionItemResponse updateRequisitionItem(UpdateRequisitionItemRequest request) {
         RequisitionItemEntity requisitionItem = requisitionItemRepoService.findByRequisitionIdAndSupplierItemId(request.getRequisitionId(), request.getSupplierItemId());
@@ -65,6 +68,8 @@ public class RequisitionItemServiceImpl implements RequisitionItemService {
         return updateRequisitionItemResponse;
     }
 
+    // delete requisition item based on its id
+    // first find its requisition item -> delete -> return deleted version?
     @Override
     public CreateRequisitionItemResponse deleteRequisitionItem(Integer id) {
         RequisitionItemEntity requisitionItem = requisitionItemRepoService.findById(id);
