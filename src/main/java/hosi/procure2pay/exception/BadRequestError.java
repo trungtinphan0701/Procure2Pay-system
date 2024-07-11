@@ -22,6 +22,8 @@ public enum BadRequestError implements ResponseError {
     SUPPLIER_ITEM_NOT_FOUND(113, "Supplier item not found"),
     ITEM_NOT_FOUND_IN_THIS_REQUISITION_SUPPLIER(114, "Item not found in this requisition supplier"),
     REQUISITION_ITEM_ID_IS_NULL(115, "Requisition item id is null"),
+    INVALID_CREDENTIALS(116, "Invalid credentials"),
+    PASSWORD_MISMATCH(117, "Password mismatch"),
     MIN_MUST_BE_SMALLER_THAN_MAX(116, "Minimum required amount is smaller than maximum allowed"),
 
     ;

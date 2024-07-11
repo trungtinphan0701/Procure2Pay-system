@@ -8,8 +8,10 @@ import hosi.procure2pay.exception.BadRequestError;
 import hosi.procure2pay.exception.ResponseException;
 import hosi.procure2pay.model.enums.TokenType;
 import hosi.procure2pay.model.request.AuthenticationRequest;
+import hosi.procure2pay.model.request.ChangePasswordRequest;
 import hosi.procure2pay.model.request.RegisterRequest;
 import hosi.procure2pay.model.response.AuthenticationResponse;
+import hosi.procure2pay.model.response.Response;
 import hosi.procure2pay.repository.TokenRepository;
 import hosi.procure2pay.repository.UserRepository;
 import hosi.procure2pay.service.AuthenticationService;
@@ -75,6 +77,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
     }
 
+    @Override
+    public AuthenticationResponse changePassword(String username, String newPassword) {
+        UserEntity user = repository.findByEmail(username)
+                .orElseThrow(() -> new ResponseException(BadRequestError.USER_NOT_FOUND));
+
+        String encodedNewPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedNewPassword);
+        repository.save(user);
+        String jwtToken = jwtService.generateToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
+        revokeAllUserTokens(user);
+        saveUserToken(user, jwtToken);
+        return AuthenticationResponse.builder()
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
     private void saveUserToken(UserEntity user, String jwtToken) {
         TokenEntity token = TokenEntity.builder()
                 .user(user)
@@ -114,10 +134,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 String accessToken = jwtService.generateToken(user);
                 revokeAllUserTokens(user);
                 saveUserToken(user, accessToken);
-                AuthenticationResponse authResponse = AuthenticationResponse.builder()
+                Response<AuthenticationResponse> authResponse = new Response<>(AuthenticationResponse.builder()
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
-                        .build();
+                        .build());
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }
