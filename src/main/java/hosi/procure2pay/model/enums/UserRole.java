@@ -1,16 +1,18 @@
 package hosi.procure2pay.model.enums;
 
+import lombok.Getter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Getter
 public enum UserRole {
-    GENERAL_MANAGER(1, "General Manager"),
-    DEPARTMENT_MANAGEMENT(2, "Department Manager"),
-    SUPERVISOR(3, "Supervisor"),
-    STAFF(4, "Staff");
+    ADMIN(1, "Admin"),
+    PURCHASER(2, "Purchaser"),
+    APPROVER(3, "Approver"),
+    SUPPLIER_MANAGER(4, "Supplier Manager");
 
     private Integer roleId;
     private String roleName;
@@ -29,14 +31,6 @@ public enum UserRole {
         for (UserRole userRole : values()) {
             userRoleMap.put(userRole.roleId, userRole);
         }
-    }
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public String getRoleName() {
-        return roleName;
     }
 
     public List<SimpleGrantedAuthority> getAuthorities() {

@@ -14,7 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import static hosi.procure2pay.model.enums.UserRole.*;
 
 @Configuration
 @EnableWebSecurity
@@ -43,7 +42,6 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers("/health").hasAnyRole(SUPERVISOR.name(), STAFF.name())
                                 .anyRequest()
                                 .authenticated()
                 )
