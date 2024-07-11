@@ -1,6 +1,9 @@
 package hosi.procure2pay.service.repo;
 
 import hosi.procure2pay.entity.UserEntity;
+import hosi.procure2pay.model.request.UpdateUserRequest;
+import hosi.procure2pay.model.response.UpdateUserResponse;
+import org.hibernate.sql.Update;
 
 import java.util.Optional;
 
@@ -10,7 +13,6 @@ public interface UserRepoService {
     UserEntity save(UserEntity user);
     UserEntity findById(Integer id);
     UserEntity findByEmail(String email);
-//    UserEntity findByFirstName(String firstName);
-//    UserEntity findByLastName(String lastName);
     boolean existsByEmail(String email);
+    void deleteById(Integer id);
 }

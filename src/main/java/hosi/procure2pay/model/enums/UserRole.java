@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 public enum UserRole {
-    GENERAL_MANAGER(1, "General Manager"),
-    DEPARTMENT_MANAGEMENT(2, "Department Manager"),
-    SUPERVISOR(3, "Supervisor"),
-    STAFF(4, "Staff");
+    PURCHASER(1, "Purchaser"),
+    APPROVER(2, "Approver"),
+    ADMIN(3, "Admin"),
+    SUPPLIER_MANAGER(4, "Supplier Manager");
 
     private Integer roleId;
     private String roleName;

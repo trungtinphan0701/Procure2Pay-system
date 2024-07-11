@@ -32,5 +32,13 @@ public class SupplierRepoServiceImpl implements SupplierRepoService {
         }
     }
 
+    @Override
+    public void deleteById(Integer id) {
+        if (id == null) {
+            throw new ResponseException(BadRequestError.SUPPLIER_ID_NULL);
+        }
+        supplierRepository.deleteById(id);
+    }
+
 
 }

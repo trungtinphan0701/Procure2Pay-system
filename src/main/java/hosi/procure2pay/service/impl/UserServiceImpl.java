@@ -5,14 +5,8 @@ import hosi.procure2pay.exception.BadRequestError;
 import hosi.procure2pay.exception.ResponseException;
 import hosi.procure2pay.mapper.UserMapper;
 import hosi.procure2pay.model.enums.UserRole;
-import hosi.procure2pay.model.request.CreateUserRequest;
-import hosi.procure2pay.model.request.GetUserByEmailRequest;
-import hosi.procure2pay.model.request.GetUserByFirstNameRequest;
-import hosi.procure2pay.model.request.GetUserByLastNameRequest;
-import hosi.procure2pay.model.response.CreateUserResponse;
-import hosi.procure2pay.model.response.GetUserByEmailResponse;
-import hosi.procure2pay.model.response.GetUserByFirstNameResponse;
-import hosi.procure2pay.model.response.GetUserByLastNameResponse;
+import hosi.procure2pay.model.request.*;
+import hosi.procure2pay.model.response.*;
 import hosi.procure2pay.service.repo.UserRepoService;
 import hosi.procure2pay.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -49,19 +43,37 @@ public class UserServiceImpl implements UserService {
         return response;
     }
 
-//    @Override
-//    public GetUserByFirstNameResponse getUserByFirstName(GetUserByFirstNameRequest request) {
-//        UserEntity userEntity = userRepoService.findByFirstName(request.getFirstName());
-//
-//        GetUserByFirstNameResponse response = userMapper.toGetUserByFirstNameResponse(userEntity);
-//        return response;
-//    }
-//
-//    @Override
-//    public GetUserByLastNameResponse getUserByLastName(GetUserByLastNameRequest request) {
-//        UserEntity userEntity = userRepoService.findByLastName(request.getLastName());
-//
-//        GetUserByLastNameResponse response = userMapper.toGetUserByLastNameResponse(userEntity);
-//        return response;
-//    }
+    @Override
+    public UpdateUserResponse updateUser(UpdateUserRequest request) {
+        UserEntity userEntity = userRepoService.findById(request.getId());
+        if (request.getFirstName() != null) {
+            userEntity.setFirstName(request.getFirstName());
+        }
+        if (request.getLastName() != null) {
+            userEntity.setLastName(request.getLastName());
+        }
+        if (request.getPassword() != null) {
+            userEntity.setPassword(request.getPassword());
+        }
+        userRepoService.save(userEntity);
+        UpdateUserResponse updateUserResponse = userMapper.toUpdateUserResponse(userEntity);
+        return updateUserResponse;
+    }
+
+    @Override
+    public CreateUserResponse deleteUser(Integer id) {
+        UserEntity userEntity = userRepoService.findById(id);
+        userRepoService.deleteById(id);
+        return userMapper.toCreateUserResponse(userEntity);
+    }
+
+    @Override
+    public UpdateUserResponse updateUserRole(UpdateUserRoleRequest request) {
+        UserEntity user = userRepoService.findById(request.getId());
+        if (request.getRole() != null) {
+            user.setRole(request.getRole());
+        }
+        userRepoService.save(user);
+        return userMapper.toUpdateUserResponse(user);
+    }
 }

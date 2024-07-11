@@ -1,8 +1,10 @@
 package hosi.procure2pay.mapper;
 
 import hosi.procure2pay.entity.UserEntity;
+import hosi.procure2pay.model.request.UpdateUserRequest;
 import hosi.procure2pay.model.response.*;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.sql.Update;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -39,25 +41,13 @@ public class UserMapper {
         return getUserByEmailResponse;
     }
 
-    public GetUserByFirstNameResponse toGetUserByFirstNameResponse(UserEntity user) {
-        GetUserByFirstNameResponse getUserByFirstNameResponse = new GetUserByFirstNameResponse();
-        getUserByFirstNameResponse.setUserId(user.getId());
-        getUserByFirstNameResponse.setFirstName(user.getFirstName());
-        getUserByFirstNameResponse.setLastName(user.getLastName());
-        getUserByFirstNameResponse.setRole(user.getRole().getRoleName());
-        getUserByFirstNameResponse.setPassword(user.getPassword());
-        getUserByFirstNameResponse.setEmail(user.getEmail());
-        return getUserByFirstNameResponse;
-    }
-
-    public GetUserByLastNameResponse toGetUserByLastNameResponse(UserEntity user) {
-        GetUserByLastNameResponse getUserByLastNameResponse = new GetUserByLastNameResponse();
-        getUserByLastNameResponse.setUserId(user.getId());
-        getUserByLastNameResponse.setFirstName(user.getFirstName());
-        getUserByLastNameResponse.setLastName(user.getLastName());
-        getUserByLastNameResponse.setRole(user.getRole().getRoleName());
-        getUserByLastNameResponse.setPassword(user.getPassword());
-        getUserByLastNameResponse.setEmail(user.getEmail());
-        return getUserByLastNameResponse;
+    public UpdateUserResponse toUpdateUserResponse(UserEntity requestUser) {
+        UpdateUserResponse updateUserResponse = new UpdateUserResponse();
+        updateUserResponse.setFirstName(requestUser.getFirstName());
+        updateUserResponse.setLastName(requestUser.getLastName());
+        updateUserResponse.setPassword(requestUser.getPassword());
+        updateUserResponse.setRole(requestUser.getRole());
+        updateUserResponse.setEmail(requestUser.getEmail());
+        return updateUserResponse;
     }
 }
