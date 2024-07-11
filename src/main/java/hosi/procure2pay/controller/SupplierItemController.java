@@ -23,11 +23,13 @@ public class SupplierItemController {
     private final SupplierItemService supplierItemService;
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('SUPPLIER_MANAGER')")
     public Response<SupplierItemResponse> addSupplierItem(@RequestBody CreateSupplierItemRequest request) {
         return new Response<>(supplierItemService.addSupplierItem(request));
     }
 
     @PostMapping("/add-many")
+    @PreAuthorize("hasRole('SUPPLIER_MANAGER')")
     public Response<List<SupplierItemResponse>> addSupplierItemMany(@RequestBody List<CreateSupplierItemRequest> supplierItems) {
         List<SupplierItemResponse> responses = new ArrayList<>();
 
@@ -39,7 +41,6 @@ public class SupplierItemController {
     }
 
     @PostMapping("/search")
-    @PreAuthorize("hasAnyRole('SUPPLIER_MANAGER')")
     public Response<PagedResult<SupplierItemResponse>> searchSupplierItem(@RequestBody SearchSupplierItemRequest request) {
         return new Response<>(supplierItemService.searchSupplierItems(request));
     }

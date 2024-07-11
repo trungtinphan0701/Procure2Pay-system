@@ -9,6 +9,7 @@ import hosi.procure2pay.model.response.Response;
 import hosi.procure2pay.model.response.UpdateSupplierResponse;
 import hosi.procure2pay.service.SupplierService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/supplier")
+@PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN')")
 @RequiredArgsConstructor
 public class SupplierController {
     private final SupplierService supplierService;

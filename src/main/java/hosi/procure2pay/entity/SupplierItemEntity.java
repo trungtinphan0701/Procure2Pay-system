@@ -28,7 +28,7 @@ public class SupplierItemEntity {
     @Enumerated(EnumType.STRING)
     private SupplierItemState state;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="supplier")
     private SupplierEntity supplier;
 

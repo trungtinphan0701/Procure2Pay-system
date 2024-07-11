@@ -17,11 +17,11 @@ public class RequisitionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="created_by")
     private UserEntity createdByUser;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="supplier_id")
     private SupplierEntity supplierEntity;
 

@@ -7,11 +7,13 @@ import hosi.procure2pay.model.response.*;
 import hosi.procure2pay.service.AuthenticationService;
 import hosi.procure2pay.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -26,11 +28,13 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public Response<CreateUserResponse> addUser(@RequestBody CreateUserRequest user) {
         return new Response<>(userService.addUser(user));
     }
 
     @PostMapping("/add-many")
+    @PreAuthorize("hasRole('ADMIN')")
     public Response<List<CreateUserResponse>> addSupplierItemMany(@RequestBody List<CreateUserRequest> users) {
         List<CreateUserResponse> responses = new ArrayList<>();
 
@@ -42,25 +46,31 @@ public class UserController {
     }
 
     @GetMapping("/email")
+    @PreAuthorize("hasRole('ADMIN')")
     public Response<GetUserByEmailResponse> getUserByEmail(@RequestBody GetUserByEmailRequest request) {
         return new Response<>(userService.getUserByEmail(request));
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasAnyRole('ADMIN','APPROVER','PURCHASER')")
     public Response<UpdateUserResponse> updateUser(@RequestBody UpdateUserRequest user) {
         return new Response<>(userService.updateUser(user));
     }
 
     @PutMapping("/update/role")
+    @PreAuthorize("hasRole('ADMIN')")
     public Response<UpdateUserResponse> updateUserRole(@RequestBody UpdateUserRoleRequest userRole) {
         return new Response<>(userService.updateUserRole(userRole));
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public Response<CreateUserResponse> deleteUser(@PathVariable Integer id) {
         return new Response<>(userService.deleteUser(id));
     }
+
     @PostMapping("/change-password")
+    @PreAuthorize("hasAnyRole('ADMIN','APPROVER','PURCHASER')")
     public Response<?> changePassword(
             @RequestBody ChangePasswordRequest changePasswordRequest
     ) {
@@ -89,19 +99,4 @@ public class UserController {
         return new Response<>(authResponse);
     }
 
-//    @GetMapping("/first-name")
-//    public Response<List<GetUserByFirstNameResponse>> getUserByFirstName(@RequestBody List<GetUserByFirstNameRequest> request) {
-//        List<GetUserByFirstNameResponse> responses = new ArrayList<>();
-//
-//        for (GetUserByFirstNameRequest user : request) {
-//            responses.add(userService.getUserByFirstName(user));
-//        }
-//
-//        return new Response<>(responses);
-//    }
-//
-//    @GetMapping("/last-name")
-//    public Response<GetUserByLastNameResponse> getUserByLastName(@RequestBody GetUserByLastNameRequest request) {
-//        return new Response<>(userService.getUserByLastName(request));
-//    }
 }

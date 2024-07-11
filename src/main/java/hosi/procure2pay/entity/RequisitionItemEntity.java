@@ -18,7 +18,7 @@ public class RequisitionItemEntity {
     @Column(name="total_cost")
     private Float totalCost;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="requisition_id")
     private RequisitionEntity requisition;
 

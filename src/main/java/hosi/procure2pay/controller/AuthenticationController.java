@@ -32,8 +32,6 @@ import java.io.IOException;
 public class AuthenticationController {
     private final AuthenticationService service;
 
-
-
     @PostMapping("/register")
     public Response<AuthenticationResponse> register(
             @RequestBody RegisterRequest request) {
@@ -45,7 +43,6 @@ public class AuthenticationController {
             @RequestBody AuthenticationRequest request) {
         return new Response<>(service.authenticate(request));
     }
-
 
     @PostMapping("/refresh-token")
     public void refreshToken(

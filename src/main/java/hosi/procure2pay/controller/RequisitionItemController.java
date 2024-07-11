@@ -7,10 +7,12 @@ import hosi.procure2pay.model.response.Response;
 import hosi.procure2pay.model.response.UpdateRequisitionItemResponse;
 import hosi.procure2pay.service.RequisitionItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/requisition-item")
+@PreAuthorize("hasAnyRole('ADMIN','APPROVER','PURCHASER')")
 @RequiredArgsConstructor
 public class RequisitionItemController {
     private final RequisitionItemService requisitionItemService;

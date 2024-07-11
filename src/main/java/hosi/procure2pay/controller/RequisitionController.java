@@ -7,6 +7,7 @@ import hosi.procure2pay.model.response.GetRequisitionInfoResponse;
 import hosi.procure2pay.model.response.Response;
 import hosi.procure2pay.service.RequisitionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController // annotation to start controller
@@ -17,6 +18,7 @@ public class RequisitionController {
     private final RequisitionService requisitionService;
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyRole('ADMIN','APPROVER','PURCHASER')")
     // createRequisitionResponse: to get all information that we need without being duplicated
     // @RequestBody: annotation to ???
     // createRequisitionRequest: to get foreign key needed to create new requisition
@@ -25,11 +27,13 @@ public class RequisitionController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','APPROVER','PURCHASER')")
     public Response<GetRequisitionInfoResponse> getRequisitionInfo(@PathVariable Integer id) {
         return new Response<>(requisitionService.getRequisitionInfoById(id));
     }
 
     @PutMapping("/approve/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','APPROVER')")
     public Response<ApproveRequisitionResponse> approveRequisition(@PathVariable Integer id) {
         return new Response<>(requisitionService.approveRequisition(id));
     }
