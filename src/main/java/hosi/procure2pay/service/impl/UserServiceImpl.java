@@ -10,6 +10,7 @@ import hosi.procure2pay.model.response.*;
 import hosi.procure2pay.service.repo.UserRepoService;
 import hosi.procure2pay.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     private final UserRepoService userRepoService;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public CreateUserResponse addUser(CreateUserRequest request) {
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setFirstName(request.getFirstName());
         userEntity.setLastName(request.getLastName());
         userEntity.setEmail(request.getEmail());
-        userEntity.setPassword(request.getPassword());
+        userEntity.setPassword(passwordEncoder.encode(request.getPassword()));
         userEntity.setRole(request.getRole());
         userRepoService.save(userEntity);
 

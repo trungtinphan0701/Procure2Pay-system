@@ -43,7 +43,11 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                .requestMatchers("/health").hasAnyRole(SUPERVISOR.name(), STAFF.name())
+                                .requestMatchers("/health").hasAnyRole(ADMIN.name(),APPROVER.name(), PURCHASER.name(), SUPPLIER_MANAGER.name())
+                                .requestMatchers("/user/update/role").hasRole(ADMIN.name())
+                                .requestMatchers("/user/add").hasRole(ADMIN.name())
+                                .requestMatchers("/user/add-many").hasRole(ADMIN.name())
+                                .requestMatchers("/user/delete").hasRole(ADMIN.name())
                                 .anyRequest()
                                 .authenticated()
                 )
