@@ -48,6 +48,7 @@ public class SecurityConfiguration {
                                 .requestMatchers("/user/add").hasRole(ADMIN.name())
                                 .requestMatchers("/user/add-many").hasRole(ADMIN.name())
                                 .requestMatchers("/user/delete").hasRole(ADMIN.name())
+                                .requestMatchers("/requisition/approve/**").hasAnyRole(ADMIN.name(),APPROVER.name())
                                 .anyRequest()
                                 .authenticated()
                 )

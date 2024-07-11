@@ -1,14 +1,23 @@
 package hosi.procure2pay.service.impl;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
+import hosi.procure2pay.entity.QSupplierItemEntity;
 import hosi.procure2pay.entity.SupplierItemEntity;
 import hosi.procure2pay.exception.BadRequestError;
 import hosi.procure2pay.exception.ResponseException;
+import hosi.procure2pay.model.request.SearchSupplierItemRequest;
 import hosi.procure2pay.repository.SupplierItemRepository;
 import hosi.procure2pay.service.repo.SupplierItemRepoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.function.BooleanSupplier;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +39,37 @@ public class SupplierItemRepoServiceImpl implements SupplierItemRepoService {
                 return supplierItem.get();
             } else throw new ResponseException(BadRequestError.SUPPLIER_ITEM_NOT_FOUND);
         }
+    }
+
+    @Override
+    public Page<SupplierItemEntity> searchSupplierItem(SearchSupplierItemRequest request) {
+        Predicate predicate = buildPredicateSearchSupplierItem(request);
+
+        // Default sort direction
+        Sort sort = Sort.by(List.of(
+                new Sort.Order(Sort.Direction.ASC, "unitCost")
+        ));
+
+        PageRequest pageRequest = PageRequest.of(request.getPageNumber(), request.getPageSize(), sort);
+
+        return supplierItemRepository.findAll(predicate, pageRequest);
+    }
+
+    private Predicate buildPredicateSearchSupplierItem(SearchSupplierItemRequest request) {
+        BooleanBuilder builder = new BooleanBuilder();
+
+        if (request.getSupplierName() != null && !request.getSupplierName().isEmpty()) {
+            builder.and(QSupplierItemEntity.supplierItemEntity.name.like("%" + request.getSupplierName() + "%"));
+        }
+
+        if (request.getMinUnitCost() != null) {
+            builder.and(QSupplierItemEntity.supplierItemEntity.unitCost.goe(request.getMinUnitCost()));
+        }
+
+        if (request.getMaxUnitCost() != null) {
+            builder.and(QSupplierItemEntity.supplierItemEntity.unitCost.loe(request.getMaxUnitCost()));
+        }
+
+        return builder;
     }
 }

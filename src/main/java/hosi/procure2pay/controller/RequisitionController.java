@@ -1,6 +1,7 @@
 package hosi.procure2pay.controller;
 
 import hosi.procure2pay.model.request.CreateRequisitionRequest;
+import hosi.procure2pay.model.response.ApproveRequisitionResponse;
 import hosi.procure2pay.model.response.CreateRequisitionResponse;
 import hosi.procure2pay.model.response.GetRequisitionInfoResponse;
 import hosi.procure2pay.model.response.Response;
@@ -26,5 +27,10 @@ public class RequisitionController {
     @GetMapping("/{id}")
     public Response<GetRequisitionInfoResponse> getRequisitionInfo(@PathVariable Integer id) {
         return new Response<>(requisitionService.getRequisitionInfoById(id));
+    }
+
+    @PutMapping("/approve/{id}")
+    public Response<ApproveRequisitionResponse> approveRequisition(@PathVariable Integer id) {
+        return new Response<>(requisitionService.approveRequisition(id));
     }
 }

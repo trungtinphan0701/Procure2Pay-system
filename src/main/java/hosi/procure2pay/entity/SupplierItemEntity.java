@@ -4,6 +4,7 @@ import hosi.procure2pay.model.enums.SupplierItemState;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Data
 @Entity

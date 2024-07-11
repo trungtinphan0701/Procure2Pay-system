@@ -50,7 +50,8 @@ public class RequisitionItemServiceImpl implements RequisitionItemService {
         requisitionItem.setQuantity(request.getQuantity());
         requisitionItem.setTotalCost(request.getQuantity()*supplierItem.getUnitCost());
         requisitionItemRepoService.save(requisitionItem);
-
+        requisition.setTotalCost(requisition.getTotalCost() + requisitionItem.getTotalCost());
+        requisitionRepoService.save(requisition);
         CreateRequisitionItemResponse response = requisitionItemMapper.toRequisitionItemResponse(requisitionItem);
         return response;
     }

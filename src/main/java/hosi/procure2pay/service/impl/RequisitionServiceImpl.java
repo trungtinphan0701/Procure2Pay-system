@@ -8,6 +8,7 @@ import hosi.procure2pay.exception.ResponseException;
 import hosi.procure2pay.mapper.RequisitionMapper;
 import hosi.procure2pay.model.enums.RequisitionState;
 import hosi.procure2pay.model.request.CreateRequisitionRequest;
+import hosi.procure2pay.model.response.ApproveRequisitionResponse;
 import hosi.procure2pay.model.response.CreateRequisitionResponse;
 import hosi.procure2pay.model.response.GetRequisitionInfoResponse;
 import hosi.procure2pay.service.RequisitionService;
@@ -56,5 +57,16 @@ public class RequisitionServiceImpl implements RequisitionService {
         }
         RequisitionEntity requisition = requisitionRepoService.findById(id);
         return requisitionMapper.toRequisitionInfoResponse(requisition);
+    }
+
+    @Override
+    public ApproveRequisitionResponse approveRequisition(Integer id) {
+        RequisitionEntity requisition = requisitionRepoService.findById(id);
+        requisition.setState(RequisitionState.APPROVED);
+        requisitionRepoService.save(requisition);
+        return ApproveRequisitionResponse.builder()
+                .requisitionId(requisition.getId())
+                .state(requisition.getState())
+                .build();
     }
 }
