@@ -1,11 +1,11 @@
 package hosi.procure2pay.controller;
 
-import hosi.procure2pay.model.request.CreateRequisitionItemRequest;
-import hosi.procure2pay.model.request.UpdateRequisitionItemRequest;
-import hosi.procure2pay.model.response.CreateRequisitionItemResponse;
+import hosi.procure2pay.model.request.RequisitionItem.CreateRequisitionItemRequest;
+import hosi.procure2pay.model.request.RequisitionItem.UpdateRequisitionItemRequest;
+import hosi.procure2pay.model.response.RequisitionItem.CreateRequisitionItemResponse;
 import hosi.procure2pay.model.response.Response;
-import hosi.procure2pay.model.response.UpdateRequisitionItemResponse;
-import hosi.procure2pay.service.RequisitionItemService;
+import hosi.procure2pay.model.response.RequisitionItem.UpdateRequisitionItemResponse;
+import hosi.procure2pay.service.RequisitionItem.RequisitionItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

@@ -1,24 +1,13 @@
 package hosi.procure2pay.controller;
 
-import hosi.procure2pay.configuration.JwtService;
-import hosi.procure2pay.exception.BadRequestError;
-import hosi.procure2pay.exception.ResponseException;
-import hosi.procure2pay.model.request.AuthenticationRequest;
-import hosi.procure2pay.model.request.ChangePasswordRequest;
-import hosi.procure2pay.model.request.RegisterRequest;
+import hosi.procure2pay.model.request.Authentication.AuthenticationRequest;
+import hosi.procure2pay.model.request.Authentication.RegisterRequest;
 import hosi.procure2pay.model.response.AuthenticationResponse;
 import hosi.procure2pay.model.response.Response;
-import hosi.procure2pay.service.AuthenticationService;
-import hosi.procure2pay.service.UserService;
+import hosi.procure2pay.service.Authentication.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

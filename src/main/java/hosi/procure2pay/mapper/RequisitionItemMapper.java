@@ -1,8 +1,8 @@
 package hosi.procure2pay.mapper;
 
 import hosi.procure2pay.entity.RequisitionItemEntity;
-import hosi.procure2pay.model.response.CreateRequisitionItemResponse;
-import hosi.procure2pay.model.response.UpdateRequisitionItemResponse;
+import hosi.procure2pay.model.response.RequisitionItem.CreateRequisitionItemResponse;
+import hosi.procure2pay.model.response.RequisitionItem.UpdateRequisitionItemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

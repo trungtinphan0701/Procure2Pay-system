@@ -1,11 +1,11 @@
 package hosi.procure2pay.controller;
 
-import hosi.procure2pay.model.request.CreateRequisitionRequest;
-import hosi.procure2pay.model.response.ApproveRequisitionResponse;
-import hosi.procure2pay.model.response.CreateRequisitionResponse;
-import hosi.procure2pay.model.response.GetRequisitionInfoResponse;
+import hosi.procure2pay.model.request.Requisition.CreateRequisitionRequest;
+import hosi.procure2pay.model.response.Requisition.ApproveRequisitionResponse;
+import hosi.procure2pay.model.response.Requisition.CreateRequisitionResponse;
+import hosi.procure2pay.model.response.Requisition.GetRequisitionInfoResponse;
 import hosi.procure2pay.model.response.Response;
-import hosi.procure2pay.service.RequisitionService;
+import hosi.procure2pay.service.Requisition.RequisitionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +22,10 @@ public class RequisitionController {
     // createRequisitionResponse: to get all information that we need without being duplicated
     // @RequestBody: annotation to ???
     // createRequisitionRequest: to get foreign key needed to create new requisition
-    public Response<CreateRequisitionResponse> addRequisition(@RequestBody CreateRequisitionRequest requisition) {
-        return new Response<>(requisitionService.addRequisition(requisition));
+    public Response<CreateRequisitionResponse> addRequisition(@RequestBody CreateRequisitionRequest request) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String currentUser = authentication.getName();
+        return new Response<>(requisitionService.addRequisition(request));
     }
 
     @GetMapping("/{id}")

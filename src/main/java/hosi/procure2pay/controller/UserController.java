@@ -2,18 +2,23 @@ package hosi.procure2pay.controller;
 
 import hosi.procure2pay.exception.BadRequestError;
 import hosi.procure2pay.exception.ResponseException;
-import hosi.procure2pay.model.request.*;
+import hosi.procure2pay.model.request.Authentication.ChangePasswordRequest;
+import hosi.procure2pay.model.request.User.*;
 import hosi.procure2pay.model.response.*;
-import hosi.procure2pay.service.AuthenticationService;
-import hosi.procure2pay.service.UserService;
+import hosi.procure2pay.model.response.User.CreateUserResponse;
+import hosi.procure2pay.model.response.User.GetUserByEmailResponse;
+import hosi.procure2pay.model.response.User.UpdateUserResponse;
+import hosi.procure2pay.model.response.User.UserInfoResponse;
+import hosi.procure2pay.service.Authentication.AuthenticationService;
+import hosi.procure2pay.service.User.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -97,6 +102,12 @@ public class UserController {
         //Change password
         AuthenticationResponse authResponse = authService.changePassword(currentUsername, changePasswordRequest.getNewPassword());
         return new Response<>(authResponse);
+    }
+
+    @PostMapping("/search")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Response<PagedResult<UserInfoResponse>> search(@RequestBody SearchUserRequest request) {
+        return new Response<>(userService.searchUsers(request));
     }
 
 }

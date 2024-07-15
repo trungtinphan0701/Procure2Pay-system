@@ -1,7 +1,8 @@
 package hosi.procure2pay.mapper;
 
 import hosi.procure2pay.entity.SupplierItemEntity;
-import hosi.procure2pay.model.response.SupplierItemResponse;
+import hosi.procure2pay.model.response.SupplierItem.SupplierItemResponse;
+import hosi.procure2pay.model.response.SupplierItem.UpdateSupplierItemResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -31,4 +32,15 @@ public class SupplierItemMapper {
         }
         return SupplierItemResponseList;
     }
+
+    public UpdateSupplierItemResponse toUpdateSupplierItemResponse (SupplierItemEntity supplierItemEntity) {
+        UpdateSupplierItemResponse SupplierItemResponse = new UpdateSupplierItemResponse();
+        SupplierItemResponse.setName(supplierItemEntity.getName());
+        SupplierItemResponse.setDescription(supplierItemEntity.getDescription());
+        SupplierItemResponse.setType(supplierItemEntity.getType());
+        SupplierItemResponse.setUnitCost(supplierItemEntity.getUnitCost());
+        SupplierItemResponse.setSupplierItemState(supplierItemEntity.getState());
+        return SupplierItemResponse;
+    }
+
 }
