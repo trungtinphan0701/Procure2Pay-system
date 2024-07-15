@@ -60,9 +60,12 @@ public class RequisitionItemServiceImpl implements RequisitionItemService {
         RequisitionItemEntity requisitionItem = requisitionItemRepoService.findByRequisitionIdAndSupplierItemId(request.getRequisitionId(), request.getSupplierItemId());
 
         SupplierItemEntity supplierItem = supplierItemRepoService.findById(request.getSupplierItemId());
+        RequisitionEntity requisition = requisitionRepoService.findById(request.getRequisitionId());
         requisitionItem.setQuantity(request.getQuantity());
         requisitionItem.setTotalCost(request.getQuantity()*supplierItem.getUnitCost());
         requisitionItemRepoService.save(requisitionItem);
+        requisition.setTotalCost(requisition.getTotalCost() + requisitionItem.getTotalCost());
+        requisitionRepoService.save(requisition);
         UpdateRequisitionItemResponse updateRequisitionItemResponse = requisitionItemMapper.toUpdateRequisitionItemResponse(requisitionItem);
         return updateRequisitionItemResponse;
     }

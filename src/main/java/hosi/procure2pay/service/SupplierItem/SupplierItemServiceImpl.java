@@ -82,10 +82,10 @@ public class SupplierItemServiceImpl implements SupplierItemService {
                 request.getPageSize());
     }
 
+
     @Override
-    public SupplierItemResponse deleteSupplierItem(Integer id) {
+    public SupplierItemResponse getSupplierItem(Integer id) {
         SupplierItemEntity supplierItemEntity = supplierItemRepoService.findById(id);
-        supplierRepoService.deleteById(id);
         return supplierItemMapper.toSupplierItemResponse(supplierItemEntity);
     }
 

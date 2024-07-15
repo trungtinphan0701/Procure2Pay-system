@@ -58,12 +58,6 @@ public class SupplierServiceImpl implements SupplierService {
         return response;
     }
 
-    @Override
-    public CreateSupplierResponse deleteSupplier(Integer id) {
-        SupplierEntity supplierEntity = supplierRepoService.findById(id);
-        supplierRepoService.deleteById(id);
-        return supplierMapper.toCreateSupplierResponse(supplierEntity);
-    }
 
     @Override
     public GetGeneralSupplierInfoResponse getGeneralSupplierInfo(Integer id) {

@@ -8,6 +8,5 @@ import org.springframework.data.domain.Page;
 public interface SupplierRepoService {
     SupplierEntity save(SupplierEntity supplier);
     SupplierEntity findById(Integer id);
-    void deleteById(Integer id);
     Page<SupplierEntity> search(SearchSupplierRequest request);
 }

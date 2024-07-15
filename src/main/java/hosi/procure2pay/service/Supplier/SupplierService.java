@@ -13,7 +13,6 @@ import hosi.procure2pay.model.response.Supplier.UpdateSupplierResponse;
 public interface SupplierService {
     CreateSupplierResponse addSupplier(CreateSupplierRequest request);
     UpdateSupplierResponse updateSupplier(UpdateSupplierRequest request);
-    CreateSupplierResponse deleteSupplier(Integer id);
     GetGeneralSupplierInfoResponse getGeneralSupplierInfo(Integer id);
     PagedResult<GetGeneralSupplierInfoResponse> searchSupplier(SearchSupplierRequest request);
 }

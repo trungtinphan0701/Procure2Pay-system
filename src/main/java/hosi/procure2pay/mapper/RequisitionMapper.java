@@ -19,6 +19,7 @@ public class RequisitionMapper {
     public CreateRequisitionResponse toRequisitionResponse (RequisitionEntity requisitionEntity) {
         CreateRequisitionResponse createRequisitionResponse = new CreateRequisitionResponse();
         createRequisitionResponse.setRequisitionId(requisitionEntity.getId());
+        createRequisitionResponse.setCode(requisitionEntity.getCode());
         createRequisitionResponse.setCreatedOn(requisitionEntity.getCreatedOn());
         createRequisitionResponse.setTotalCost(requisitionEntity.getTotalCost());
         createRequisitionResponse.setUserFirstName(requisitionEntity.getCreatedByUser().getFirstName());

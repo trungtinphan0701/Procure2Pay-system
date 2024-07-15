@@ -40,6 +40,12 @@ public class SupplierItemController {
         return new Response<>(responses);
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN','APPROVER','PURCHASER')")
+    public Response<SupplierItemResponse> getSupplierItem(@PathVariable Integer id) {
+        return new Response<>(supplierItemService.getSupplierItem(id));
+    }
+
     @PostMapping("/search")
     @PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN','APPROVER','PURCHASER')")
     public Response<PagedResult<SupplierItemResponse>> searchSupplierItem(@RequestBody SearchSupplierItemRequest request) {
@@ -50,11 +56,5 @@ public class SupplierItemController {
     @PreAuthorize("hasRole('SUPPLIER_MANAGER')")
     public Response<UpdateSupplierItemResponse> updateSupplierItem(@RequestBody UpdateSupplierItemRequest request) {
         return new Response<>(supplierItemService.updateSupplierItem(request));
-    }
-
-    @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('SUPPLIER_MANAGER')")
-    public Response<SupplierItemResponse> deleteUser(@PathVariable Integer id) {
-        return new Response<>(supplierItemService.deleteSupplierItem(id));
     }
 }

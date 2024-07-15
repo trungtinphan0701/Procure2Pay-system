@@ -1,8 +1,11 @@
 package hosi.procure2pay.controller;
 
 import hosi.procure2pay.model.request.Requisition.CreateRequisitionRequest;
+import hosi.procure2pay.model.request.Requisition.SearchRequisitionRequest;
+import hosi.procure2pay.model.response.PagedResult;
 import hosi.procure2pay.model.response.Requisition.ApproveRequisitionResponse;
 import hosi.procure2pay.model.response.Requisition.CreateRequisitionResponse;
+import hosi.procure2pay.model.response.Requisition.DeclineRequisitionResponse;
 import hosi.procure2pay.model.response.Requisition.GetRequisitionInfoResponse;
 import hosi.procure2pay.model.response.Response;
 import hosi.procure2pay.service.Requisition.RequisitionService;
@@ -23,8 +26,6 @@ public class RequisitionController {
     // @RequestBody: annotation to ???
     // createRequisitionRequest: to get foreign key needed to create new requisition
     public Response<CreateRequisitionResponse> addRequisition(@RequestBody CreateRequisitionRequest request) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String currentUser = authentication.getName();
         return new Response<>(requisitionService.addRequisition(request));
     }
 
@@ -38,5 +39,17 @@ public class RequisitionController {
     @PreAuthorize("hasAnyRole('ADMIN','APPROVER')")
     public Response<ApproveRequisitionResponse> approveRequisition(@PathVariable Integer id) {
         return new Response<>(requisitionService.approveRequisition(id));
+    }
+
+    @PutMapping("/decline/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'APPROVER')")
+    public Response<DeclineRequisitionResponse> declineRequisition(@PathVariable Integer id) {
+        return new Response<>(requisitionService.declineRequisition(id));
+    }
+
+    @PostMapping("/search")
+    @PreAuthorize("hasAnyRole('ADMIN','APPROVER','PURCHASER')")
+    public Response<PagedResult<GetRequisitionInfoResponse>> searchRequisition(@RequestBody SearchRequisitionRequest request) {
+        return new Response<>(requisitionService.searchRequisition(request));
     }
 }

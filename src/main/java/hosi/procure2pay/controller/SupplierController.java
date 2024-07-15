@@ -20,17 +20,18 @@ import java.util.function.Supplier;
 
 @RestController
 @RequestMapping("/supplier")
-@PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN')")
 @RequiredArgsConstructor
 public class SupplierController {
     private final SupplierService supplierService;
 
     @PostMapping("/add")
+    @PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN')")
     public Response<CreateSupplierResponse> addSupplier(@RequestBody CreateSupplierRequest supplierEntity) {
         return new Response<>(supplierService.addSupplier(supplierEntity));
     }
 
     @PostMapping("/add-many")
+    @PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN')")
     public Response<List<CreateSupplierResponse>> addSupplierItemMany(@RequestBody List<CreateSupplierRequest> suppliers) {
         List<CreateSupplierResponse> responses = new ArrayList<>();
 
@@ -42,21 +43,19 @@ public class SupplierController {
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN')")
     public Response<UpdateSupplierResponse> updateSupplier(@RequestBody UpdateSupplierRequest supplierEntity) {
         return new Response<>(supplierService.updateSupplier(supplierEntity));
     }
 
-    @DeleteMapping("/delete/{id}")
-    public Response<CreateSupplierResponse> deleteSupplier(@PathVariable Integer id) {
-        return new Response<>(supplierService.deleteSupplier(id));
-    }
-
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN','APPROVER','PURCHASER')")
     public Response<GetGeneralSupplierInfoResponse> getGeneralSupplierInfo(@PathVariable Integer id) {
         return new Response<>(supplierService.getGeneralSupplierInfo(id));
     }
 
     @PostMapping("/search")
+    @PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN','APPROVER','PURCHASER')")
     public Response<PagedResult<GetGeneralSupplierInfoResponse>> searchSupplier(@RequestBody SearchSupplierRequest request) {
         return new Response<>(supplierService.searchSupplier(request));
     }

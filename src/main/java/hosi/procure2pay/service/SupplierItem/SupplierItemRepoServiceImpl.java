@@ -53,14 +53,6 @@ public class SupplierItemRepoServiceImpl implements SupplierItemRepoService {
         return supplierItemRepository.findAll(predicate, pageRequest);
     }
 
-    @Override
-    public void deleteById(Integer id) {
-        if (id == null) {
-            throw new ResponseException(BadRequestError.SUPPLIER_ITEM_ID_NULL);
-        }
-        supplierItemRepository.deleteById(id);
-    }
-
     private Predicate buildPredicateSearchSupplierItem(SearchSupplierItemRequest request) {
         BooleanBuilder builder = new BooleanBuilder();
 

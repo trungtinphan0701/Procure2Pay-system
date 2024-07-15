@@ -25,7 +25,7 @@ public enum BadRequestError implements ResponseError {
     INVALID_CREDENTIALS(116, "Invalid credentials"),
     PASSWORD_MISMATCH(117, "Password mismatch"),
     MIN_MUST_BE_SMALLER_THAN_MAX(116, "Minimum required amount is smaller than maximum allowed"),
-
+    START_DATE_MUST_BE_BEFORE_END_DATE(117, "Start date must be before end date"),
     ;
 
     private final int errorCode;
