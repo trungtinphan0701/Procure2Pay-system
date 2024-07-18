@@ -7,7 +7,6 @@ import hosi.procure2pay.entity.SupplierEntity;
 import hosi.procure2pay.exception.BadRequestError;
 import hosi.procure2pay.exception.ResponseException;
 import hosi.procure2pay.model.request.Supplier.SearchSupplierRequest;
-import hosi.procure2pay.model.response.Supplier.GetGeneralSupplierInfoResponse;
 import hosi.procure2pay.repository.SupplierRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,11 +22,13 @@ import java.util.Optional;
 public class SupplierRepoServiceImpl implements SupplierRepoService {
     private final SupplierRepository supplierRepository;
 
+    // save supplier into database
     @Override
     public SupplierEntity save(SupplierEntity supplier) {
         return supplierRepository.save(supplier);
     }
 
+    // find supplier by id
     @Override
     public SupplierEntity findById(Integer id) {
         if (id == null) {
@@ -40,7 +41,7 @@ public class SupplierRepoServiceImpl implements SupplierRepoService {
         }
     }
 
-
+    // search function by name/address
     private Predicate buildPredicateSearchSupplier(SearchSupplierRequest request) {
         BooleanBuilder builder = new BooleanBuilder();
 

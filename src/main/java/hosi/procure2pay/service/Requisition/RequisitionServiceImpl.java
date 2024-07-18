@@ -1,15 +1,12 @@
 package hosi.procure2pay.service.Requisition;
 
 import hosi.procure2pay.entity.RequisitionEntity;
-import hosi.procure2pay.entity.RequisitionItemEntity;
 import hosi.procure2pay.entity.SupplierEntity;
 import hosi.procure2pay.entity.UserEntity;
 import hosi.procure2pay.exception.BadRequestError;
 import hosi.procure2pay.exception.ResponseException;
 import hosi.procure2pay.mapper.RequisitionMapper;
 import hosi.procure2pay.model.enums.RequisitionState;
-import hosi.procure2pay.model.enums.UserRole;
-import hosi.procure2pay.model.request.Requisition.CreateRequisitionRequest;
 import hosi.procure2pay.model.request.Requisition.SearchRequisitionRequest;
 import hosi.procure2pay.model.response.PagedResult;
 import hosi.procure2pay.model.response.Requisition.ApproveRequisitionResponse;
@@ -37,24 +34,32 @@ public class RequisitionServiceImpl implements RequisitionService {
     private final SupplierRepoService supplierRepoService;
     private final RequisitionMapper requisitionMapper;
 
+    // create new requisition (everyone can access except supplier manager)
+    // only choose supplier id to start new requisition -> need supplier id only
     @Override
-    public CreateRequisitionResponse addRequisition(CreateRequisitionRequest request) {
-        if (request.getSupplierId() == null) {
+    public CreateRequisitionResponse addRequisition(Integer supplierId) {
+        if (supplierId == null) {
             throw new ResponseException(BadRequestError.SUPPLIER_ID_NULL);
         }
+        // Get current user status
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUser = authentication.getName();
-
         UserEntity user = userRepoService.findByEmail(currentUser);
-        SupplierEntity supplier = supplierRepoService.findById(request.getSupplierId());
+
+        // Find supplier info based on input
+        SupplierEntity supplier = supplierRepoService.findById(supplierId);
 
         RequisitionEntity requisition = new RequisitionEntity();
         requisition.setCreatedByUser(user);
         requisition.setCreatedOn(LocalDateTime.now());
+        // new requisition always set awaiting approval, regardless of role
         requisition.setState(RequisitionState.AWAITING_APPROVAL);
+        // new requisition always set total cost to 0, will be updated after
+        // adding some requisition item
         requisition.setTotalCost(0.0f);
         requisition.setSupplierEntity(supplier);
         requisitionRepoService.save(requisition);
+        // generate code "PR" + current requisition id for each new requisition
         requisition.setCode("PR" + requisition.getId().toString());
         requisitionRepoService.save(requisition);
 
@@ -62,19 +67,19 @@ public class RequisitionServiceImpl implements RequisitionService {
         return response;
     }
 
+    // get requisition info by id
     @Override
     public GetRequisitionInfoResponse getRequisitionInfoById(Integer id) {
-        if (id == null) {
-            throw new ResponseException(BadRequestError.REQUISITION_ID_NULL);
-        }
         RequisitionEntity requisition = requisitionRepoService.findById(id);
         return requisitionMapper.toRequisitionInfoResponse(requisition);
     }
 
+    // approve requisition (Approver and Admin access only)
     @Override
     public ApproveRequisitionResponse approveRequisition(Integer id) {
         RequisitionEntity requisition = requisitionRepoService.findById(id);
         requisition.setState(RequisitionState.APPROVED);
+        // change code to "PO" + current id for approved requisition
         requisition.setCode("PO"+ id.toString());
         requisitionRepoService.save(requisition);
         return ApproveRequisitionResponse.builder()
@@ -83,6 +88,7 @@ public class RequisitionServiceImpl implements RequisitionService {
                 .build();
     }
 
+    // decline requisition (Approver and Admin access only)
     @Override
     public DeclineRequisitionResponse declineRequisition(Integer id) {
         RequisitionEntity requisition = requisitionRepoService.findById(id);
@@ -94,6 +100,7 @@ public class RequisitionServiceImpl implements RequisitionService {
                 .build();
     }
 
+    // search function
     @Override
     public PagedResult<GetRequisitionInfoResponse> searchRequisition(SearchRequisitionRequest request) {
         this.handleSearchRequisitionRequest(request);

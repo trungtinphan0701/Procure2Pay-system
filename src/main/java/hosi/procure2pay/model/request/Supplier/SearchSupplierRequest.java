@@ -3,7 +3,6 @@ package hosi.procure2pay.model.request.Supplier;
 import hosi.procure2pay.utils.Constants;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @NoArgsConstructor

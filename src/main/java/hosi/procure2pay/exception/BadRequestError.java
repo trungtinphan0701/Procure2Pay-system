@@ -26,6 +26,10 @@ public enum BadRequestError implements ResponseError {
     PASSWORD_MISMATCH(117, "Password mismatch"),
     MIN_MUST_BE_SMALLER_THAN_MAX(116, "Minimum required amount is smaller than maximum allowed"),
     START_DATE_MUST_BE_BEFORE_END_DATE(117, "Start date must be before end date"),
+    NAME_MUST_NOT_CONTAIN_ANY_NUMBER_OR_SPECIAL_CHARACTER(118, "Name must not contain any number or special character"),
+    NAME_MUST_NOT_BE_EMPTY(119, "Name must not be empty"),
+    USER_EMAIL_INVALID(120, "User email is invalid"),
+    MUST_NOT_BE_NULL_OR_EMPTY(121, "Must not be null or empty"),
     ;
 
     private final int errorCode;

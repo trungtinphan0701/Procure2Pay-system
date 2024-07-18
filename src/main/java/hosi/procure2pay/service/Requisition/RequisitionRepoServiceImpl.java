@@ -15,8 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,11 +23,13 @@ import java.util.Optional;
 public class RequisitionRepoServiceImpl implements RequisitionRepoService {
     private final RequisitionRepository requisitionRepository;
 
+    // save requisition to database
     @Override
     public RequisitionEntity save(RequisitionEntity requisition) {
         return requisitionRepository.save(requisition);
     }
 
+    // find requisition by id
     @Override
     public RequisitionEntity findById(Integer id) {
         if (id == null) {
@@ -42,6 +42,7 @@ public class RequisitionRepoServiceImpl implements RequisitionRepoService {
         }
     }
 
+    // search function
     @Override
     public Page<RequisitionEntity> searchRequisition(SearchRequisitionRequest request) {
         Predicate predicate = buildPredicateSearchRequisition(request);
@@ -66,6 +67,11 @@ public class RequisitionRepoServiceImpl implements RequisitionRepoService {
 
         if (request.getState()!= null) {
             builder.and(QRequisitionEntity.requisitionEntity.state.eq(request.getState()));
+        }
+
+        if (request.getSupplierItem() != null) {
+            builder.and(QRequisitionEntity.requisitionEntity.requisitionItemEntityList.any().supplierItem.name
+                    .like("%" + request.getSupplierItem() + "%"));
         }
 
         if (request.getMinTotalCost() != null) {

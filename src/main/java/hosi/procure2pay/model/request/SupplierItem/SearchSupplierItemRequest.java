@@ -1,5 +1,6 @@
 package hosi.procure2pay.model.request.SupplierItem;
 
+import hosi.procure2pay.model.enums.SupplierItemState;
 import hosi.procure2pay.utils.Constants;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,8 @@ import lombok.NoArgsConstructor;
 public class SearchSupplierItemRequest {
 
     private String supplierName;
+    private String supplierType;
+    private SupplierItemState supplierItemState;
 
     private Float minUnitCost = Float.MIN_VALUE;
     private Float maxUnitCost = Float.MAX_VALUE;

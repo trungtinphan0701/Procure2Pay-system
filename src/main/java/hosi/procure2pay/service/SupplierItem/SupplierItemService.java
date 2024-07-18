@@ -7,8 +7,6 @@ import hosi.procure2pay.model.response.SupplierItem.SupplierItemResponse;
 import hosi.procure2pay.model.response.PagedResult;
 import hosi.procure2pay.model.response.SupplierItem.UpdateSupplierItemResponse;
 
-import java.util.function.Supplier;
-
 public interface SupplierItemService {
     SupplierItemResponse addSupplierItem(CreateSupplierItemRequest request);
     UpdateSupplierItemResponse updateSupplierItem(UpdateSupplierItemRequest request);

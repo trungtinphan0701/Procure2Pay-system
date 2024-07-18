@@ -6,13 +6,10 @@ import hosi.procure2pay.model.request.Authentication.ChangePasswordRequest;
 import hosi.procure2pay.model.request.User.*;
 import hosi.procure2pay.model.response.*;
 import hosi.procure2pay.model.response.User.CreateUserResponse;
-import hosi.procure2pay.model.response.User.GetUserByEmailResponse;
-import hosi.procure2pay.model.response.User.UpdateUserResponse;
 import hosi.procure2pay.model.response.User.UserInfoResponse;
 import hosi.procure2pay.service.Authentication.AuthenticationService;
 import hosi.procure2pay.service.User.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,7 +37,7 @@ public class UserController {
 
     @PostMapping("/add-many")
     @PreAuthorize("hasRole('ADMIN')")
-    public Response<List<CreateUserResponse>> addSupplierItemMany(@RequestBody List<CreateUserRequest> users) {
+    public Response<List<CreateUserResponse>> addUserMany(@RequestBody List<CreateUserRequest> users) {
         List<CreateUserResponse> responses = new ArrayList<>();
 
         for (CreateUserRequest user  : users) {
@@ -50,21 +47,21 @@ public class UserController {
         return new Response<>(responses);
     }
 
-    @GetMapping("/email")
+    @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public Response<GetUserByEmailResponse> getUserByEmail(@RequestBody GetUserByEmailRequest request) {
-        return new Response<>(userService.getUserByEmail(request));
+    public Response<UserInfoResponse> getUser(@PathVariable Integer id) {
+        return new Response<>(userService.getUser(id));
     }
 
     @PutMapping("/update")
     @PreAuthorize("hasAnyRole('ADMIN','APPROVER','PURCHASER')")
-    public Response<UpdateUserResponse> updateUser(@RequestBody UpdateUserRequest user) {
+    public Response<UserInfoResponse> updateUser(@RequestBody UpdateUserRequest user) {
         return new Response<>(userService.updateUser(user));
     }
 
     @PutMapping("/update/role")
     @PreAuthorize("hasRole('ADMIN')")
-    public Response<UpdateUserResponse> updateUserRole(@RequestBody UpdateUserRoleRequest userRole) {
+    public Response<UserInfoResponse> updateUserRole(@RequestBody UpdateUserRoleRequest userRole) {
         return new Response<>(userService.updateUserRole(userRole));
     }
 

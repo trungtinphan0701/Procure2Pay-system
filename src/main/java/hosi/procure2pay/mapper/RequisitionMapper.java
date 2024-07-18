@@ -11,7 +11,6 @@ import java.time.format.DateTimeFormatter;
 
 @Component
 @RequiredArgsConstructor
-// function to change type to ideal result
 public class RequisitionMapper {
     private final UserMapper userMapper;
     private final RequisitionItemMapper requisitionItemMapper;

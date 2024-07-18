@@ -22,11 +22,13 @@ import java.util.Optional;
 public class SupplierItemRepoServiceImpl implements SupplierItemRepoService {
     private final SupplierItemRepository supplierItemRepository;
 
+    // save supplier item to database
     @Override
     public SupplierItemEntity save(SupplierItemEntity supplierItem) {
         return supplierItemRepository.save(supplierItem);
     }
 
+    // find supplier item by id
     @Override
     public SupplierItemEntity findById(Integer id) {
         if (id == null) {
@@ -39,6 +41,7 @@ public class SupplierItemRepoServiceImpl implements SupplierItemRepoService {
         }
     }
 
+    // search function
     @Override
     public Page<SupplierItemEntity> searchSupplierItem(SearchSupplierItemRequest request) {
         Predicate predicate = buildPredicateSearchSupplierItem(request);
@@ -66,6 +69,14 @@ public class SupplierItemRepoServiceImpl implements SupplierItemRepoService {
 
         if (request.getMaxUnitCost() != null) {
             builder.and(QSupplierItemEntity.supplierItemEntity.unitCost.loe(request.getMaxUnitCost()));
+        }
+
+        if (request.getSupplierType() != null && !request.getSupplierType().isEmpty()) {
+            builder.and(QSupplierItemEntity.supplierItemEntity.type.like("%" + request.getSupplierType() + "%"));
+        }
+
+        if (request.getSupplierItemState() != null) {
+            builder.and(QSupplierItemEntity.supplierItemEntity.state.eq(request.getSupplierItemState()));
         }
 
         return builder;

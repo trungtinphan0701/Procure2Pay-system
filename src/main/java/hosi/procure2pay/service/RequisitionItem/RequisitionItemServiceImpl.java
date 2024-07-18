@@ -35,9 +35,10 @@ public class RequisitionItemServiceImpl implements RequisitionItemService {
         if (request.getSupplierItemId() == null) {
             throw new ResponseException(BadRequestError.SUPPLIER_ITEM_ID_NULL);
         }
+        // get requisition and supplier item info
         RequisitionEntity requisition = requisitionRepoService.findById(request.getRequisitionId());
         SupplierItemEntity supplierItem = supplierItemRepoService.findById(request.getSupplierItemId());
-
+        // if choosen supplier from supplier item different to supplier from requisition -> error
         if (!Objects.equals(requisition.getSupplierEntity().getId(), supplierItem.getSupplier().getId())) {
             throw new ResponseException(BadRequestError.ITEM_NOT_FOUND_IN_THIS_REQUISITION_SUPPLIER);
         }
@@ -48,6 +49,7 @@ public class RequisitionItemServiceImpl implements RequisitionItemService {
         requisitionItem.setQuantity(request.getQuantity());
         requisitionItem.setTotalCost(request.getQuantity()*supplierItem.getUnitCost());
         requisitionItemRepoService.save(requisitionItem);
+        // update total cost for requisition everytime adding new requisition item
         requisition.setTotalCost(requisition.getTotalCost() + requisitionItem.getTotalCost());
         requisitionRepoService.save(requisition);
         CreateRequisitionItemResponse response = requisitionItemMapper.toRequisitionItemResponse(requisitionItem);

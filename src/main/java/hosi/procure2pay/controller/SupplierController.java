@@ -1,14 +1,12 @@
 package hosi.procure2pay.controller;
 
-import hosi.procure2pay.entity.SupplierEntity;
 import hosi.procure2pay.model.request.Supplier.CreateSupplierRequest;
 import hosi.procure2pay.model.request.Supplier.SearchSupplierRequest;
 import hosi.procure2pay.model.request.Supplier.UpdateSupplierRequest;
 import hosi.procure2pay.model.response.PagedResult;
-import hosi.procure2pay.model.response.Supplier.CreateSupplierResponse;
+import hosi.procure2pay.model.response.Supplier.SupplierInfoResponse;
 import hosi.procure2pay.model.response.Response;
 import hosi.procure2pay.model.response.Supplier.GetGeneralSupplierInfoResponse;
-import hosi.procure2pay.model.response.Supplier.UpdateSupplierResponse;
 import hosi.procure2pay.service.Supplier.SupplierService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 @RestController
 @RequestMapping("/supplier")
@@ -26,14 +23,14 @@ public class SupplierController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN')")
-    public Response<CreateSupplierResponse> addSupplier(@RequestBody CreateSupplierRequest supplierEntity) {
+    public Response<SupplierInfoResponse> addSupplier(@RequestBody CreateSupplierRequest supplierEntity) {
         return new Response<>(supplierService.addSupplier(supplierEntity));
     }
 
     @PostMapping("/add-many")
     @PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN')")
-    public Response<List<CreateSupplierResponse>> addSupplierItemMany(@RequestBody List<CreateSupplierRequest> suppliers) {
-        List<CreateSupplierResponse> responses = new ArrayList<>();
+    public Response<List<SupplierInfoResponse>> addSupplierItemMany(@RequestBody List<CreateSupplierRequest> suppliers) {
+        List<SupplierInfoResponse> responses = new ArrayList<>();
 
         for (CreateSupplierRequest supplier  : suppliers) {
             responses.add(supplierService.addSupplier(supplier));
@@ -44,7 +41,7 @@ public class SupplierController {
 
     @PutMapping("/update")
     @PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN')")
-    public Response<UpdateSupplierResponse> updateSupplier(@RequestBody UpdateSupplierRequest supplierEntity) {
+    public Response<SupplierInfoResponse> updateSupplier(@RequestBody UpdateSupplierRequest supplierEntity) {
         return new Response<>(supplierService.updateSupplier(supplierEntity));
     }
 

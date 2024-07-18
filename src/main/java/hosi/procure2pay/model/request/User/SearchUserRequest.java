@@ -4,7 +4,6 @@ import hosi.procure2pay.model.enums.UserRole;
 import hosi.procure2pay.utils.Constants;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @NoArgsConstructor
