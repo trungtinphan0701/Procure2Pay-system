@@ -11,5 +11,5 @@ public interface SupplierItemService {
     SupplierItemResponse addSupplierItem(CreateSupplierItemRequest request);
     UpdateSupplierItemResponse updateSupplierItem(UpdateSupplierItemRequest request);
     PagedResult<SupplierItemResponse> searchSupplierItems(SearchSupplierItemRequest request);
-    SupplierItemResponse deleteSupplierItem(Integer id);
+    SupplierItemResponse getSupplierItem(Integer id);
 }

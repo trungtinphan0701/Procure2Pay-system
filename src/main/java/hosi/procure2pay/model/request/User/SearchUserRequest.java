@@ -3,10 +3,10 @@ package hosi.procure2pay.model.request.User;
 import hosi.procure2pay.model.enums.UserRole;
 import hosi.procure2pay.utils.Constants;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class SearchUserRequest {
     private String firstName;
     private String lastName;

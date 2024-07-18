@@ -4,7 +4,6 @@ import hosi.procure2pay.model.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -70,6 +69,4 @@ public class UserEntity implements UserDetails {
         return true;
     }
 }
-
-// User has many requisitions - one to many with requisitionentity
 

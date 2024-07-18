@@ -23,13 +23,13 @@ public class SupplierItemController {
     private final SupplierItemService supplierItemService;
 
     @PostMapping("/add")
-    @PreAuthorize("hasRole('SUPPLIER_MANAGER')")
+    @PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN')")
     public Response<SupplierItemResponse> addSupplierItem(@RequestBody CreateSupplierItemRequest request) {
         return new Response<>(supplierItemService.addSupplierItem(request));
     }
 
     @PostMapping("/add-many")
-    @PreAuthorize("hasRole('SUPPLIER_MANAGER')")
+    @PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN')")
     public Response<List<SupplierItemResponse>> addSupplierItemMany(@RequestBody List<CreateSupplierItemRequest> supplierItems) {
         List<SupplierItemResponse> responses = new ArrayList<>();
 
@@ -38,6 +38,12 @@ public class SupplierItemController {
         }
 
         return new Response<>(responses);
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN','APPROVER','PURCHASER')")
+    public Response<SupplierItemResponse> getSupplierItem(@PathVariable Integer id) {
+        return new Response<>(supplierItemService.getSupplierItem(id));
     }
 
     @PostMapping("/search")
@@ -50,11 +56,5 @@ public class SupplierItemController {
     @PreAuthorize("hasRole('SUPPLIER_MANAGER')")
     public Response<UpdateSupplierItemResponse> updateSupplierItem(@RequestBody UpdateSupplierItemRequest request) {
         return new Response<>(supplierItemService.updateSupplierItem(request));
-    }
-
-    @DeleteMapping("/delete/{id}")
-    @PreAuthorize("hasRole('SUPPLIER_MANAGER')")
-    public Response<SupplierItemResponse> deleteUser(@PathVariable Integer id) {
-        return new Response<>(supplierItemService.deleteSupplierItem(id));
     }
 }

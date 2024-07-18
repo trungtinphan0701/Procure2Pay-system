@@ -17,6 +17,8 @@ public class RequisitionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String code;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="created_by")
     private UserEntity createdByUser;

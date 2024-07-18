@@ -8,5 +8,4 @@ public interface SupplierItemRepoService {
     SupplierItemEntity save(SupplierItemEntity supplierItem);
     SupplierItemEntity findById(Integer id);
     Page<SupplierItemEntity> searchSupplierItem(SearchSupplierItemRequest request);
-    void deleteById(Integer id);
 }

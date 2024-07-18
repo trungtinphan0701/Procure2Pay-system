@@ -11,7 +11,6 @@ import java.time.format.DateTimeFormatter;
 
 @Component
 @RequiredArgsConstructor
-// function to change type to ideal result
 public class RequisitionMapper {
     private final UserMapper userMapper;
     private final RequisitionItemMapper requisitionItemMapper;
@@ -19,6 +18,7 @@ public class RequisitionMapper {
     public CreateRequisitionResponse toRequisitionResponse (RequisitionEntity requisitionEntity) {
         CreateRequisitionResponse createRequisitionResponse = new CreateRequisitionResponse();
         createRequisitionResponse.setRequisitionId(requisitionEntity.getId());
+        createRequisitionResponse.setCode(requisitionEntity.getCode());
         createRequisitionResponse.setCreatedOn(requisitionEntity.getCreatedOn());
         createRequisitionResponse.setTotalCost(requisitionEntity.getTotalCost());
         createRequisitionResponse.setUserFirstName(requisitionEntity.getCreatedByUser().getFirstName());

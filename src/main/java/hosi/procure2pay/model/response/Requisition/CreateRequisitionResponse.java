@@ -12,4 +12,5 @@ public class CreateRequisitionResponse {
     private String userLastName;
     private LocalDateTime createdOn;
     private Float totalCost;
+    private String code;
 }

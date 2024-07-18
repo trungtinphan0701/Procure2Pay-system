@@ -7,6 +7,7 @@ public class CreateRequisitionItemResponse {
     private Integer requisitionItemId;
     private Integer requisitionId;
     private String supplierName;
+    private String supplierItemName;
     private Integer quantity;
     private Float unitCost;
     private Float totalCost;

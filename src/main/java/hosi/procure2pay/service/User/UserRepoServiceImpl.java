@@ -22,11 +22,13 @@ import java.util.Optional;
 public class UserRepoServiceImpl implements UserRepoService {
     private final UserRepository userRepository;
 
+    // save user entity to database
     @Override
     public UserEntity save(UserEntity user) {
         return userRepository.save(user);
     }
 
+    // find user by id
     @Override
     public UserEntity findById(Integer id) {
         if (id == null) {
@@ -40,6 +42,7 @@ public class UserRepoServiceImpl implements UserRepoService {
 
     }
 
+    // find user by email
     @Override
     public UserEntity findByEmail(String email) {
         if (email == null) {
@@ -52,11 +55,13 @@ public class UserRepoServiceImpl implements UserRepoService {
         }
     }
 
+    // check if email input already exists in database (user is unique with each email)
     @Override
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
 
+    // delete user by id
     @Override
     public void deleteById(Integer id) {
         if (id == null) {
@@ -65,6 +70,7 @@ public class UserRepoServiceImpl implements UserRepoService {
         userRepository.deleteById(id);
     }
 
+    // search function (can search by first name, last name, role)
     @Override
     public Page<UserEntity> search(SearchUserRequest request) {
         Predicate predicate = buildPredicateSearchUser(request);

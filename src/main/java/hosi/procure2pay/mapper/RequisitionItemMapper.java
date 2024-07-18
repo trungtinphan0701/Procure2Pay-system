@@ -17,6 +17,7 @@ public class RequisitionItemMapper {
         createRequisitionItemResponse.setRequisitionItemId(requisitionItemEntity.getId());
         createRequisitionItemResponse.setRequisitionId(requisitionItemEntity.getRequisition().getId());
         createRequisitionItemResponse.setSupplierName(requisitionItemEntity.getSupplierItem().getSupplier().getName());
+        createRequisitionItemResponse.setSupplierItemName(requisitionItemEntity.getSupplierItem().getName());
         createRequisitionItemResponse.setQuantity(requisitionItemEntity.getQuantity());
         createRequisitionItemResponse.setUnitCost(requisitionItemEntity.getSupplierItem().getUnitCost());
         createRequisitionItemResponse.setTotalCost(requisitionItemEntity.getTotalCost());
