@@ -1,5 +1,6 @@
 package hosi.procure2pay.controller;
 
+import hosi.procure2pay.model.request.Requisition.AddRequisitionRequest;
 import hosi.procure2pay.model.request.Requisition.SearchRequisitionRequest;
 import hosi.procure2pay.model.response.PagedResult;
 import hosi.procure2pay.model.response.Requisition.ApproveRequisitionResponse;
@@ -20,8 +21,8 @@ public class RequisitionController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAnyRole('ADMIN','APPROVER','PURCHASER')")
-    public Response<CreateRequisitionResponse> addRequisition(@RequestBody Integer supplierId) {
-        return new Response<>(requisitionService.addRequisition(supplierId));
+    public Response<CreateRequisitionResponse> addRequisition(@RequestBody AddRequisitionRequest request) {
+        return new Response<>(requisitionService.addRequisition(request.getSupplierId()));
     }
 
     @GetMapping("/{id}")
