@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -51,6 +51,19 @@ public class UserController {
     @PreAuthorize("hasRole('ADMIN')")
     public Response<UserInfoResponse> getUser(@PathVariable Integer id) {
         return new Response<>(userService.getUser(id));
+    }
+
+    @PostMapping("/profile")
+    @PreAuthorize("hasAnyRole('ADMIN','APPROVER','PURCHASER', 'SUPPLIER_MANAGER')")
+    public Response<GetUserByEmailResponse> getUserProfile() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+
+        return new Response<>(userService.getUserByEmail(
+                GetUserByEmailRequest.builder()
+                        .email(currentUsername)
+                        .build())
+        );
     }
 
     @PutMapping("/update")

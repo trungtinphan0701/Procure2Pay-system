@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/supplier-item")
+@RequestMapping("/api/v1/supplier-item")
 @RequiredArgsConstructor
 public class SupplierItemController {
     private final SupplierItemService supplierItemService;

@@ -11,7 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/requisition-item")
+@RequestMapping("/api/v1/requisition-item")
 @PreAuthorize("hasAnyRole('ADMIN','APPROVER','PURCHASER')")
 @RequiredArgsConstructor
 public class RequisitionItemController {

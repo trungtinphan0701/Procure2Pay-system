@@ -16,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/supplier")
+@RequestMapping("/api/v1/supplier")
+@PreAuthorize("hasAnyRole('SUPPLIER_MANAGER','ADMIN')")
 @RequiredArgsConstructor
 public class SupplierController {
     private final SupplierService supplierService;

@@ -12,9 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/requisition")
-@RequiredArgsConstructor
+@RestController // annotation to start controller
+@RequestMapping("/api/v1/requisition") // annotation to shorten the url
+@RequiredArgsConstructor // needed annotation
 public class RequisitionController {
     private final RequisitionService requisitionService;
 
