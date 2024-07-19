@@ -12,6 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GetRequisitionInfoResponse {
     private Integer requisitionId; // for document number
+    private String code;
     private String supplierName; // origin name
     private LocalDate deliveryDate; // delivery date
     private UserInfoResponse createdBy;
