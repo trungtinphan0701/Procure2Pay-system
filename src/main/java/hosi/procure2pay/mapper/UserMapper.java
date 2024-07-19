@@ -26,6 +26,7 @@ public class UserMapper {
 
     public UserInfoResponse toUserInfoResponse(UserEntity user) {
         UserInfoResponse userInfoResponse = new UserInfoResponse();
+        userInfoResponse.setId(user.getId());
         userInfoResponse.setFirstName(user.getFirstName());
         userInfoResponse.setLastName(user.getLastName());
         userInfoResponse.setEmail(user.getEmail());

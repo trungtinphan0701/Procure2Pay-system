@@ -8,6 +8,7 @@ import hosi.procure2pay.model.response.User.UserInfoResponse;
 public interface UserService {
     CreateUserResponse addUser(CreateUserRequest request);
     UserInfoResponse getUser(Integer id);
+    UserInfoResponse getUserProfile(String username);
     UserInfoResponse updateUser(UpdateUserRequest request);
     UserInfoResponse updateUserRole(UpdateUserRoleRequest request);
     CreateUserResponse deleteUser(Integer id);

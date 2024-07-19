@@ -47,6 +47,12 @@ public class UserServiceImpl implements UserService {
         return userMapper.toUserInfoResponse(userEntity);
     }
 
+    @Override
+    public UserInfoResponse getUserProfile(String username) {
+        UserEntity userEntity = userRepoService.findByEmail(username);
+        return userMapper.toUserInfoResponse(userEntity);
+    }
+
     // Update user details (can only edit first name, last name)
     // for Admin, Approver and Purchaser
     @Override

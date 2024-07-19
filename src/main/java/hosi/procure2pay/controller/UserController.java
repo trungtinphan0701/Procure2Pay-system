@@ -55,15 +55,11 @@ public class UserController {
 
     @PostMapping("/profile")
     @PreAuthorize("hasAnyRole('ADMIN','APPROVER','PURCHASER', 'SUPPLIER_MANAGER')")
-    public Response<GetUserByEmailResponse> getUserProfile() {
+    public Response<UserInfoResponse> getUserProfile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
 
-        return new Response<>(userService.getUserByEmail(
-                GetUserByEmailRequest.builder()
-                        .email(currentUsername)
-                        .build())
-        );
+        return new Response<>(userService.getUserProfile(currentUsername));
     }
 
     @PutMapping("/update")
