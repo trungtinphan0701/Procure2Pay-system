@@ -7,6 +7,7 @@ import hosi.procure2pay.model.response.User.UserInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Component
@@ -24,6 +25,8 @@ public class RequisitionMapper {
         createRequisitionResponse.setUserFirstName(requisitionEntity.getCreatedByUser().getFirstName());
         createRequisitionResponse.setUserLastName(requisitionEntity.getCreatedByUser().getLastName());
         createRequisitionResponse.setSupplierName(requisitionEntity.getSupplierEntity().getName());
+        createRequisitionResponse.setDeliveryDate(requisitionEntity.getDeliveryDate());
+        createRequisitionResponse.setReference(requisitionEntity.getReference());
         return createRequisitionResponse;
     }
 

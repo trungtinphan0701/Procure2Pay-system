@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,11 +35,14 @@ public class RequisitionEntity {
     @Enumerated(EnumType.STRING)
     private RequisitionState state;
 
+    public String reference;
+
+    public LocalDate deliveryDate;
+
     @Column(name="total_cost")
     private Float totalCost;
 
-    @OneToMany(mappedBy = "requisition")
+    @OneToMany(mappedBy = "requisition", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RequisitionItemEntity> requisitionItemEntityList;
 }
 
-// many requisitions can be owned by 1 user - many to one with userentity

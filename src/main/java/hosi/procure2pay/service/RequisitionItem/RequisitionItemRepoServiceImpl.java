@@ -11,6 +11,8 @@ import hosi.procure2pay.service.SupplierItem.SupplierItemRepoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -69,4 +71,5 @@ public class RequisitionItemRepoServiceImpl implements RequisitionItemRepoServic
         }
         requisitionItemRepository.deleteById(id);
     }
+
 }

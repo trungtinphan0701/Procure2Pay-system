@@ -11,4 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddRequisitionRequest {
     private Integer supplierId;
+    private String reference;
+    private String deliveryDate;
 }

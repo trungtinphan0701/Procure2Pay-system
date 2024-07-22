@@ -42,6 +42,14 @@ public class RequisitionRepoServiceImpl implements RequisitionRepoService {
         }
     }
 
+    @Override
+    public void delete(Integer id) {
+        if (id == null) {
+            throw new ResponseException(BadRequestError.REQUISITION_ID_NULL);
+        }
+        requisitionRepository.deleteById(id);
+    }
+
     // search function
     @Override
     public Page<RequisitionEntity> searchRequisition(SearchRequisitionRequest request) {

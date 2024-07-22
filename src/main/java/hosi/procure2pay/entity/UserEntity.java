@@ -30,8 +30,11 @@ public class UserEntity implements UserDetails {
 
     private String email;
 
-    @OneToMany(mappedBy="createdByUser")
+    @OneToMany(mappedBy="createdByUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RequisitionEntity> requisitions;
+
+    @Column(name = "company_address")
+    private String companyAddress;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;

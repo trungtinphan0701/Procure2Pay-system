@@ -7,5 +7,6 @@ import org.springframework.data.domain.Page;
 public interface RequisitionRepoService {
     RequisitionEntity save(RequisitionEntity requisition);
     RequisitionEntity findById(Integer id);
+    void delete(Integer id);
     Page<RequisitionEntity> searchRequisition(SearchRequisitionRequest request);
 }

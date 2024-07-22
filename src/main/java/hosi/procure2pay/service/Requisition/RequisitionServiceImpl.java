@@ -1,18 +1,23 @@
 package hosi.procure2pay.service.Requisition;
 
 import hosi.procure2pay.entity.RequisitionEntity;
+import hosi.procure2pay.entity.RequisitionItemEntity;
 import hosi.procure2pay.entity.SupplierEntity;
 import hosi.procure2pay.entity.UserEntity;
 import hosi.procure2pay.exception.BadRequestError;
 import hosi.procure2pay.exception.ResponseException;
 import hosi.procure2pay.mapper.RequisitionMapper;
 import hosi.procure2pay.model.enums.RequisitionState;
+import hosi.procure2pay.model.request.Requisition.AddRequisitionRequest;
 import hosi.procure2pay.model.request.Requisition.SearchRequisitionRequest;
 import hosi.procure2pay.model.response.PagedResult;
 import hosi.procure2pay.model.response.Requisition.ApproveRequisitionResponse;
 import hosi.procure2pay.model.response.Requisition.CreateRequisitionResponse;
 import hosi.procure2pay.model.response.Requisition.DeclineRequisitionResponse;
 import hosi.procure2pay.model.response.Requisition.GetRequisitionInfoResponse;
+import hosi.procure2pay.repository.RequisitionItemRepository;
+import hosi.procure2pay.repository.UserRepository;
+import hosi.procure2pay.service.RequisitionItem.RequisitionItemRepoService;
 import hosi.procure2pay.service.Supplier.SupplierRepoService;
 import hosi.procure2pay.service.User.UserRepoService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +30,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,12 +39,15 @@ public class RequisitionServiceImpl implements RequisitionService {
     private final UserRepoService userRepoService;
     private final SupplierRepoService supplierRepoService;
     private final RequisitionMapper requisitionMapper;
+    private final RequisitionItemRepoService requisitionItemRepoService;
+    private UserRepository userRepo;
+    private RequisitionItemRepository requisitionItemRepo;
 
     // create new requisition (everyone can access except supplier manager)
     // only choose supplier id to start new requisition -> need supplier id only
     @Override
-    public CreateRequisitionResponse addRequisition(Integer supplierId) {
-        if (supplierId == null) {
+    public CreateRequisitionResponse addRequisition(AddRequisitionRequest addRequisitionRequest) {
+        if (addRequisitionRequest.getSupplierId() == null) {
             throw new ResponseException(BadRequestError.SUPPLIER_ID_NULL);
         }
         // Get current user status
@@ -47,7 +56,7 @@ public class RequisitionServiceImpl implements RequisitionService {
         UserEntity user = userRepoService.findByEmail(currentUser);
 
         // Find supplier info based on input
-        SupplierEntity supplier = supplierRepoService.findById(supplierId);
+        SupplierEntity supplier = supplierRepoService.findById(addRequisitionRequest.getSupplierId());
 
         RequisitionEntity requisition = new RequisitionEntity();
         requisition.setCreatedByUser(user);
@@ -57,6 +66,10 @@ public class RequisitionServiceImpl implements RequisitionService {
         // new requisition always set total cost to 0, will be updated after
         // adding some requisition item
         requisition.setTotalCost(0.0f);
+        requisition.setDeliveryDate(LocalDate.parse(addRequisitionRequest.getDeliveryDate()));
+        if (requisition.getReference() != null && !requisition.getReference().isEmpty()) {
+            requisition.setReference(requisition.getReference());
+        }
         requisition.setSupplierEntity(supplier);
         requisitionRepoService.save(requisition);
         // generate code "PR" + current requisition id for each new requisition
@@ -120,6 +133,20 @@ public class RequisitionServiceImpl implements RequisitionService {
                 request.getPageNumber(),
                 request.getPageSize());
 
+    }
+
+    @Override
+    public CreateRequisitionResponse deleteRequisition(Integer id) {
+        RequisitionEntity requisition = requisitionRepoService.findById(id);
+        UserEntity user = userRepoService.findById(requisition.getCreatedByUser().getId());
+        userRepo.deleteAll();
+        List<RequisitionItemEntity> requisitionItemEntityList = requisition.getRequisitionItemEntityList();
+//        for (RequisitionItemEntity requisitionItemEntity : requisitionItemEntityList) {
+//            requisitionItemRepoService.delete(requisitionItemEntity.getId());
+//        }
+        requisitionItemRepo.deleteAll();
+        requisitionRepoService.delete(id);
+        return requisitionMapper.toRequisitionResponse(requisition);
     }
 
     private void handleSearchRequisitionRequest(SearchRequisitionRequest request) {

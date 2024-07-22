@@ -21,6 +21,7 @@ public class UserMapper {
         createUserResponse.setEmail(user.getEmail());
         createUserResponse.setRole(user.getRole());
         createUserResponse.setPassword(user.getPassword());
+        createUserResponse.setCompanyAddress(user.getCompanyAddress());
         return createUserResponse;
     }
 
@@ -31,6 +32,7 @@ public class UserMapper {
         userInfoResponse.setLastName(user.getLastName());
         userInfoResponse.setEmail(user.getEmail());
         userInfoResponse.setRole(user.getRole());
+        userInfoResponse.setCompanyAddress(user.getCompanyAddress());
         return userInfoResponse;
     }
 

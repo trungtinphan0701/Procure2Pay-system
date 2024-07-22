@@ -16,4 +16,5 @@ public class UserInfoResponse {
     private String lastName;
     private String email;
     private UserRole role;
+    private String companyAddress;
 }

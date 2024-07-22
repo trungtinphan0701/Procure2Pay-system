@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setEmail(request.getEmail());
         userEntity.setPassword(passwordEncoder.encode(request.getPassword()));
         userEntity.setRole(request.getRole());
+        userEntity.setCompanyAddress(request.getCompanyAddress());
         userRepoService.save(userEntity);
 
         CreateUserResponse response = userMapper.toCreateUserResponse(userEntity);

@@ -22,13 +22,19 @@ public class RequisitionController {
     @PostMapping("/add")
     @PreAuthorize("hasAnyRole('ADMIN','APPROVER','PURCHASER')")
     public Response<CreateRequisitionResponse> addRequisition(@RequestBody AddRequisitionRequest request) {
-        return new Response<>(requisitionService.addRequisition(request.getSupplierId()));
+        return new Response<>(requisitionService.addRequisition(request));
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','APPROVER','PURCHASER')")
     public Response<GetRequisitionInfoResponse> getRequisitionInfo(@PathVariable Integer id) {
         return new Response<>(requisitionService.getRequisitionInfoById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','APPROVER','PURCHASER')")
+    public Response<CreateRequisitionResponse> deleteRequisition(@PathVariable Integer id) {
+        return new Response<>(requisitionService.deleteRequisition(id));
     }
 
     @PutMapping("/approve/{id}")

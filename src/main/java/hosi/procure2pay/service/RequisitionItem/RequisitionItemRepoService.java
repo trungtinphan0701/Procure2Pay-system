@@ -7,4 +7,5 @@ public interface RequisitionItemRepoService {
     RequisitionItemEntity findByRequisitionIdAndSupplierItemId(Integer requisitionId, Integer supplierItemId);
     RequisitionItemEntity findById(Integer id);
     void delete(Integer id);
+
 }
